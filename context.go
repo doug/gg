@@ -1713,6 +1713,12 @@ func sdfAccelForShape(kind ShapeKind) AcceleratedOp {
 
 // doFill performs the fill operation respecting the current RasterizerMode.
 func (c *Context) doFill() error {
+	// Strength reduction (Skia/tiny-skia pattern):
+	// BlendDestination = keep destination unchanged, so the entire draw is a no-op.
+	if c.paint.blendMode == blendModeDestination {
+		return nil
+	}
+
 	mode := c.rasterizerMode
 
 	// Set GPU scissor rect for rectangular clips.
@@ -1763,6 +1769,11 @@ func (c *Context) doFill() error {
 
 // doStroke performs the stroke operation respecting the current RasterizerMode.
 func (c *Context) doStroke() error {
+	// Strength reduction: BlendDestination = no-op (same as doFill).
+	if c.paint.blendMode == blendModeDestination {
+		return nil
+	}
+
 	c.paint.TransformScale = c.totalMatrix().ScaleFactor()
 	mode := c.rasterizerMode
 
