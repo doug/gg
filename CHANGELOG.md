@@ -31,6 +31,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 115 enterprise blend mode tests with pixel-level verification for all
   29 modes, gradient fills, anti-aliased geometry, semi-transparent
   foreground, stroke blending, and byte-level formula validation.
+- `ScaleAbout(sx, sy, x, y)` — scale around a point, matching `RotateAbout`
+  ([#442](https://github.com/gogpu/gg/issues/442)). Also `ShearAbout`.
+- `LoadFontFace` undeprecated — convenience one-liner for quick start.
+  Advanced usage (variable fonts, features) still uses `text.NewFontSourceFromFile`.
+- "Common Patterns" section in README: FillPreserve+Stroke, Clear vs
+  ClearWithColor, LoadFontFace, ScaleAbout.
 
 ## [0.50.7] - 2026-07-17
 

@@ -1010,6 +1010,21 @@ func (c *Context) RotateAbout(angle, x, y float64) {
 	c.Translate(-x, -y)
 }
 
+// ScaleAbout scales around a specific point.
+// This is equivalent to Translate(x,y) → Scale(sx,sy) → Translate(-x,-y).
+func (c *Context) ScaleAbout(sx, sy, x, y float64) {
+	c.Translate(x, y)
+	c.Scale(sx, sy)
+	c.Translate(-x, -y)
+}
+
+// ShearAbout shears around a specific point.
+func (c *Context) ShearAbout(sx, sy, x, y float64) {
+	c.Translate(x, y)
+	c.Shear(sx, sy)
+	c.Translate(-x, -y)
+}
+
 // Shear applies a shear transformation.
 func (c *Context) Shear(x, y float64) {
 	c.matrix = c.matrix.Multiply(Shear(x, y))
