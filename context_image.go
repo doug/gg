@@ -81,6 +81,126 @@ const (
 	BlendOverlay = intImage.BlendOverlay
 )
 
+// Extended blend mode constants for per-operation blending via SetBlendMode.
+// These match the W3C Compositing and Blending Level 1 specification.
+//
+// Porter-Duff compositing operators (values 4+):
+const (
+	// BlendDestinationOver composites destination over source.
+	BlendDestinationOver BlendMode = 4
+
+	// BlendSourceIn shows source only where destination is opaque.
+	BlendSourceIn BlendMode = 5
+
+	// BlendDestinationIn shows destination only where source is opaque.
+	BlendDestinationIn BlendMode = 6
+
+	// BlendSourceOut shows source only where destination is transparent.
+	BlendSourceOut BlendMode = 7
+
+	// BlendDestinationOut shows destination only where source is transparent.
+	BlendDestinationOut BlendMode = 8
+
+	// BlendSourceAtop composites source over destination, preserving destination alpha.
+	BlendSourceAtop BlendMode = 9
+
+	// BlendDestinationAtop composites destination over source, preserving source alpha.
+	BlendDestinationAtop BlendMode = 10
+
+	// BlendXor shows source and destination only where they don't overlap.
+	BlendXor BlendMode = 11
+
+	// BlendPlus adds source and destination colors, clamped to 255.
+	BlendPlus BlendMode = 12
+
+	// BlendModulate multiplies source and destination (component-wise, premultiplied).
+	BlendModulate BlendMode = 13
+)
+
+// Advanced separable blend modes (values 14+):
+const (
+	// BlendDarken selects the darker of source and destination per channel.
+	BlendDarken BlendMode = 17
+
+	// BlendLighten selects the lighter of source and destination per channel.
+	BlendLighten BlendMode = 18
+
+	// BlendColorDodge brightens the destination to reflect the source.
+	BlendColorDodge BlendMode = 19
+
+	// BlendColorBurn darkens the destination to reflect the source.
+	BlendColorBurn BlendMode = 20
+
+	// BlendHardLight combines multiply and screen based on source brightness.
+	BlendHardLight BlendMode = 21
+
+	// BlendSoftLight is a softer version of HardLight.
+	BlendSoftLight BlendMode = 22
+
+	// BlendDifference produces the absolute difference per channel.
+	BlendDifference BlendMode = 23
+
+	// BlendExclusion is similar to Difference but with lower contrast.
+	BlendExclusion BlendMode = 24
+)
+
+// Non-separable HSL blend modes (values 25+):
+const (
+	// BlendHue uses hue of source with saturation and luminosity of destination.
+	BlendHue BlendMode = 25
+
+	// BlendSaturation uses saturation of source with hue and luminosity of destination.
+	BlendSaturation BlendMode = 26
+
+	// BlendColor uses hue and saturation of source with luminosity of destination.
+	BlendColor BlendMode = 27
+
+	// BlendLuminosity uses luminosity of source with hue and saturation of destination.
+	BlendLuminosity BlendMode = 28
+)
+
+// Porter-Duff compositing operators (Clear, Source, Destination).
+// Values 29-31 to avoid collision with legacy constants (0-3).
+// Mapped to internal values (0-2) via mapPublicBlendMode.
+const (
+	// BlendClear clears destination to transparent black.
+	BlendClear BlendMode = 29
+
+	// BlendSource replaces destination with source (ignores destination).
+	BlendSource BlendMode = 30
+
+	// BlendDestination keeps destination unchanged (ignores source, no-op).
+	BlendDestination BlendMode = 31
+)
+
+// mapPublicBlendMode converts a public BlendMode value to internal paintBlendMode.
+//
+// The legacy layer constants (BlendNormal=0, BlendMultiply=1, BlendScreen=2,
+// BlendOverlay=3) have different numeric values than the corresponding
+// internal blend constants. This function maps them correctly.
+//
+// Values >= 4 are already in the internal numbering space and pass through.
+func mapPublicBlendMode(pub BlendMode) paintBlendMode {
+	switch pub {
+	case 0: // BlendNormal → source-over
+		return blendModeSourceOver
+	case 1: // BlendMultiply → multiply
+		return blendModeMultiply
+	case 2: // BlendScreen → screen
+		return blendModeScreen
+	case 3: // BlendOverlay → overlay
+		return blendModeOverlay
+	case 29: // BlendClear
+		return blendModeClear
+	case 30: // BlendSource
+		return blendModeSource
+	case 31: // BlendDestination
+		return blendModeDestination
+	default:
+		return paintBlendMode(pub)
+	}
+}
+
 // DrawImageOptions specifies parameters for drawing an image.
 type DrawImageOptions struct {
 	// X, Y specify the top-left corner where the image will be drawn.

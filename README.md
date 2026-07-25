@@ -433,21 +433,29 @@ for _, layer := range glyph.Layers {
 
 See [`examples/color_emoji/`](examples/color_emoji/) for a complete example.
 
-### Layer Compositing
+### Blend Modes
 
-29 blend modes with isolated layers:
+29 W3C blend modes for direct Fill/Stroke operations:
+
+```go
+// Per-operation blending (Skia/Cairo/Qt pattern):
+dc.SetRGB(1, 0, 0) // red background
+dc.DrawRectangle(0, 0, 200, 200)
+dc.Fill()
+
+dc.SetBlendMode(gg.BlendMultiply)
+dc.SetRGB(0, 0, 1) // blue foreground
+dc.DrawCircle(100, 100, 80)
+dc.Fill() // uses Multiply blending
+
+dc.SetBlendMode(gg.BlendNormal) // reset to default
+```
+
+For isolated compositing with opacity, use layers:
 
 ```go
 dc.PushLayer(gg.BlendOverlay, 0.7)
-
-dc.SetRGB(1, 0, 0)
-dc.DrawCircle(150, 200, 100)
-dc.Fill()
-
-dc.SetRGB(0, 0, 1)
-dc.DrawCircle(250, 200, 100)
-dc.Fill()
-
+// ... draw content ...
 dc.PopLayer()
 ```
 

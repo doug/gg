@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`SetBlendMode()` was a no-op** ([#439](https://github.com/gogpu/gg/issues/439)) —
+  all 29 W3C blend modes are now wired through the CPU rendering pipeline.
+  `SetBlendMode(BlendMultiply)` followed by `Fill()` or `Stroke()` now
+  correctly uses the specified blend mode instead of silently defaulting
+  to SourceOver. Default path (SourceOver) has zero overhead — same inlined
+  fast path as before.
+
+### Added
+
+- **All 29 W3C blend modes for direct Fill/Stroke** — 14 Porter-Duff
+  compositing operators, 11 advanced separable modes (Multiply, Screen,
+  Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight, SoftLight,
+  Difference, Exclusion), 4 non-separable HSL modes (Hue, Saturation,
+  Color, Luminosity). Matches Skia/Cairo/Qt per-operation blending model.
+- `BlendClear`, `BlendSource`, `BlendDestination` — previously missing
+  Porter-Duff constants now exported.
+- `GetBlendMode()` — returns the current blend mode.
+- `BlendDestination` strength reduction — draws with Destination blend mode
+  are fast-rejected (no-op), matching Skia/tiny-skia pattern.
+- 115 enterprise blend mode tests with pixel-level verification for all
+  29 modes, gradient fills, anti-aliased geometry, semi-transparent
+  foreground, stroke blending, and byte-level formula validation.
+
 ## [0.50.7] - 2026-07-17
 
 ### Fixed

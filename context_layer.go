@@ -186,17 +186,30 @@ func (c *Context) applyMaskToPixmap(pm *Pixmap, mask *Mask) {
 }
 
 // SetBlendMode sets the blend mode for subsequent fill and stroke operations.
-// This is currently a placeholder for future blend mode support in direct drawing operations.
+// The blend mode controls how source pixels are composited onto the destination.
 //
-// For now, blend modes are primarily used with layers via PushLayer/PopLayer.
+// All 29 blend modes from the W3C Compositing and Blending specification are
+// supported: 14 Porter-Duff operators, 11 separable modes (Multiply, Screen,
+// Overlay, etc.), and 4 non-separable HSL modes (Hue, Saturation, Color, Luminosity).
+//
+// The default mode is BlendNormal (source-over alpha compositing).
+// For SourceOver (the default), rendering uses the existing optimized float64
+// inline path with zero additional overhead.
 //
 // Example:
 //
 //	dc.SetBlendMode(gg.BlendMultiply)
-//	dc.Fill() // Future: will use multiply blend mode
-func (c *Context) SetBlendMode(_ BlendMode) {
-	// Store for future use in paint operations
-	// Currently, blending is primarily done via layers
+//	dc.SetRGB(1, 0, 0)
+//	dc.DrawRectangle(0, 0, 100, 100)
+//	dc.Fill()
+//	dc.SetBlendMode(gg.BlendNormal) // restore default
+func (c *Context) SetBlendMode(mode BlendMode) {
+	c.paint.blendMode = mapPublicBlendMode(mode)
+}
+
+// GetBlendMode returns the current blend mode for fill and stroke operations.
+func (c *Context) GetBlendMode() BlendMode {
+	return BlendMode(c.paint.blendMode)
 }
 
 // compositeLayer composites a layer onto a parent pixmap using the layer's

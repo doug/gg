@@ -314,21 +314,39 @@ func (r *SoftwareRenderer) fillWithCoverageFiller(
 	clipMaskW := paint.ClipMaskW
 	clipMaskX := paint.ClipMaskX
 	clipMaskY := paint.ClipMaskY
+	bfn := lookupBlendFuncForPaint(paint)
 	if color, ok := solidColorFromPaint(paint); ok {
-		r.fillCoverageSolidPath(pixmap, p, filler, fillRule, cb, color, clipFn, maskFn, clipMask, clipMaskW, clipMaskX, clipMaskY)
+		r.fillCoverageSolidPath(pixmap, p, filler, fillRule, cb, color, clipFn, maskFn, clipMask, clipMaskW, clipMaskX, clipMaskY, bfn)
 	} else {
-		r.fillCoveragePaintPath(pixmap, p, filler, fillRule, cb, paint, clipFn, maskFn, clipMask, clipMaskW, clipMaskX, clipMaskY)
+		r.fillCoveragePaintPath(pixmap, p, filler, fillRule, cb, paint, clipFn, maskFn, clipMask, clipMaskW, clipMaskX, clipMaskY, bfn)
 	}
 }
 
 // fillCoverageSolidPath fills using the CoverageFiller with a solid color,
 // applying optional clip and mask coverage.
+// When bfn is nil, uses the fast SrcOver path; otherwise dispatches per-pixel.
 func (r *SoftwareRenderer) fillCoverageSolidPath(
 	pixmap *Pixmap, p *Path, filler CoverageFiller,
 	fillRule FillRule, cb *ClipBounds, color RGBA,
 	clipFn func(x, y float64) byte, maskFn func(x, y int) uint8,
 	clipMask []uint8, clipMaskW, clipMaskX, clipMaskY int,
+	bfn blendFunc,
 ) {
+	if bfn == nil {
+		// Fast path: SrcOver — zero overhead, inline formula.
+		filler.FillCoverage(p, r.width, r.height, fillRule, cb,
+			func(x, y int, coverage uint8) {
+				coverage = applyClipCoverageFromMaskOrFn(clipMask, clipMaskW, clipMaskX, clipMaskY, clipFn, x, y, coverage)
+				coverage = applyMaskCoverage(maskFn, x, y, coverage)
+				if coverage == 0 {
+					return
+				}
+				r.blendCoverageSolid(pixmap, x, y, coverage, color)
+			})
+		return
+	}
+
+	// Non-SrcOver: apply blend function per-pixel.
 	filler.FillCoverage(p, r.width, r.height, fillRule, cb,
 		func(x, y int, coverage uint8) {
 			coverage = applyClipCoverageFromMaskOrFn(clipMask, clipMaskW, clipMaskX, clipMaskY, clipFn, x, y, coverage)
@@ -336,18 +354,33 @@ func (r *SoftwareRenderer) fillCoverageSolidPath(
 			if coverage == 0 {
 				return
 			}
-			r.blendCoverageSolid(pixmap, x, y, coverage, color)
+			r.blendCoverageSolidMode(pixmap, x, y, coverage, color, bfn)
 		})
 }
 
 // fillCoveragePaintPath fills using the CoverageFiller with a paint pattern,
 // applying optional clip and mask coverage.
+// When bfn is nil, uses the fast SrcOver path; otherwise dispatches per-pixel.
 func (r *SoftwareRenderer) fillCoveragePaintPath(
 	pixmap *Pixmap, p *Path, filler CoverageFiller,
 	fillRule FillRule, cb *ClipBounds, paint *Paint,
 	clipFn func(x, y float64) byte, maskFn func(x, y int) uint8,
 	clipMask []uint8, clipMaskW, clipMaskX, clipMaskY int,
+	bfn blendFunc,
 ) {
+	if bfn == nil {
+		filler.FillCoverage(p, r.width, r.height, fillRule, cb,
+			func(x, y int, coverage uint8) {
+				coverage = applyClipCoverageFromMaskOrFn(clipMask, clipMaskW, clipMaskX, clipMaskY, clipFn, x, y, coverage)
+				coverage = applyMaskCoverage(maskFn, x, y, coverage)
+				if coverage == 0 {
+					return
+				}
+				r.blendCoveragePaint(pixmap, x, y, coverage, paint)
+			})
+		return
+	}
+
 	filler.FillCoverage(p, r.width, r.height, fillRule, cb,
 		func(x, y int, coverage uint8) {
 			coverage = applyClipCoverageFromMaskOrFn(clipMask, clipMaskW, clipMaskX, clipMaskY, clipFn, x, y, coverage)
@@ -355,7 +388,8 @@ func (r *SoftwareRenderer) fillCoveragePaintPath(
 			if coverage == 0 {
 				return
 			}
-			r.blendCoveragePaint(pixmap, x, y, coverage, paint)
+			c := paint.ColorAt(float64(x)+0.5, float64(y)+0.5)
+			r.blendCoverageSolidMode(pixmap, x, y, coverage, c, bfn)
 		})
 }
 
@@ -518,13 +552,14 @@ func (r *SoftwareRenderer) Fill(pixmap *Pixmap, p *Path, paint *Paint) error {
 		coreFillRule = raster.FillRuleEvenOdd
 	}
 
+	bfn := lookupBlendFuncForPaint(paint)
 	if color, ok := solidColorFromPaint(paint); ok {
 		// Fast path: solid color
 		clipFn := paint.ClipCoverage
 		maskFn := paint.MaskCoverage
 		cm, cmW, cmX, cmY := paint.ClipMask, paint.ClipMaskW, paint.ClipMaskX, paint.ClipMaskY
 		r.analyticFiller.Fill(r.edgeBuilder, coreFillRule, func(y int, runs *raster.AlphaRuns) {
-			r.blendAlphaRunsFromCoreRuns(pixmap, y, runs, color, clipFn, maskFn, cm, cmW, cmX, cmY)
+			r.blendAlphaRunsFromCoreRuns(pixmap, y, runs, color, clipFn, maskFn, cm, cmW, cmX, cmY, bfn)
 		})
 	} else {
 		// Pattern/gradient path: per-pixel color sampling
@@ -532,7 +567,7 @@ func (r *SoftwareRenderer) Fill(pixmap *Pixmap, p *Path, paint *Paint) error {
 		maskFn := paint.MaskCoverage
 		cm, cmW, cmX, cmY := paint.ClipMask, paint.ClipMaskW, paint.ClipMaskX, paint.ClipMaskY
 		r.analyticFiller.Fill(r.edgeBuilder, coreFillRule, func(y int, runs *raster.AlphaRuns) {
-			r.blendAlphaRunsFromCoreRunsPaint(pixmap, y, runs, paint, clipFn, maskFn, cm, cmW, cmX, cmY)
+			r.blendAlphaRunsFromCoreRunsPaint(pixmap, y, runs, paint, clipFn, maskFn, cm, cmW, cmX, cmY, bfn)
 		})
 	}
 
@@ -587,13 +622,14 @@ func (r *SoftwareRenderer) fillNoAA(pixmap *Pixmap, p *Path, paint *Paint) error
 	clipFn := paint.ClipCoverage
 	maskFn := paint.MaskCoverage
 
+	bfn := lookupBlendFuncForPaint(paint)
 	if color, ok := solidColorFromPaint(paint); ok {
 		r.noAAFiller.Fill(r.noAAEdgeBuilder, coreFillRule, func(y, left, spanWidth int) {
-			r.blitNoAASolidSpan(pixmap, y, left, spanWidth, color, clipFn, maskFn)
+			r.blitNoAASolidSpan(pixmap, y, left, spanWidth, color, clipFn, maskFn, bfn)
 		})
 	} else {
 		r.noAAFiller.Fill(r.noAAEdgeBuilder, coreFillRule, func(y, left, spanWidth int) {
-			r.blitNoAAPaintSpan(pixmap, y, left, spanWidth, paint, clipFn, maskFn)
+			r.blitNoAAPaintSpan(pixmap, y, left, spanWidth, paint, clipFn, maskFn, bfn)
 		})
 	}
 
@@ -604,7 +640,18 @@ func (r *SoftwareRenderer) fillNoAA(pixmap *Pixmap, p *Path, paint *Paint) error
 func (r *SoftwareRenderer) blitNoAASolidSpan(
 	pixmap *Pixmap, y, left, spanWidth int, color RGBA,
 	clipFn func(float64, float64) byte, maskFn func(int, int) uint8,
+	bfn blendFunc,
 ) {
+	if bfn != nil {
+		for x := left; x < left+spanWidth; x++ {
+			cov := noaaPixelCoverage(x, y, clipFn, maskFn)
+			if cov == 0 {
+				continue
+			}
+			r.blendCoverageSolidMode(pixmap, x, y, cov, color, bfn)
+		}
+		return
+	}
 	for x := left; x < left+spanWidth; x++ {
 		cov := noaaPixelCoverage(x, y, clipFn, maskFn)
 		if cov == 0 {
@@ -618,7 +665,19 @@ func (r *SoftwareRenderer) blitNoAASolidSpan(
 func (r *SoftwareRenderer) blitNoAAPaintSpan(
 	pixmap *Pixmap, y, left, spanWidth int, paint *Paint,
 	clipFn func(float64, float64) byte, maskFn func(int, int) uint8,
+	bfn blendFunc,
 ) {
+	if bfn != nil {
+		for x := left; x < left+spanWidth; x++ {
+			cov := noaaPixelCoverage(x, y, clipFn, maskFn)
+			if cov == 0 {
+				continue
+			}
+			c := paint.ColorAt(float64(x)+0.5, float64(y)+0.5)
+			r.blendCoverageSolidMode(pixmap, x, y, cov, c, bfn)
+		}
+		return
+	}
 	for x := left; x < left+spanWidth; x++ {
 		cov := noaaPixelCoverage(x, y, clipFn, maskFn)
 		if cov == 0 {
@@ -702,6 +761,83 @@ func (r *SoftwareRenderer) blendCoverageSolid(pixmap *Pixmap, x, y int, coverage
 	)
 }
 
+// blendCoverageSolidMode blends a single pixel with solid color, coverage, and
+// an arbitrary blend mode. Coverage is applied AFTER blending via a lerp with
+// the original destination (the correct approach for non-Porter-Duff modes where
+// coverage cannot be pre-scaled into source alpha).
+//
+// Reference: tiny-skia blend_mode.rs:68 (should_pre_scale_coverage).
+func (r *SoftwareRenderer) blendCoverageSolidMode(
+	pixmap *Pixmap, x, y int, coverage uint8, color RGBA, fn blendFunc,
+) {
+	if x < 0 || x >= pixmap.Width() || y < 0 || y >= pixmap.Height() {
+		return
+	}
+
+	// Convert source color to premultiplied byte.
+	sr := floatToByte(color.R * color.A)
+	sg := floatToByte(color.G * color.A)
+	sb := floatToByte(color.B * color.A)
+	sa := floatToByte(color.A)
+
+	// Read destination as premultiplied bytes.
+	dstR, dstG, dstB, dstA := pixmap.getPremul(x, y)
+	dr := floatToByte(dstR)
+	dg := floatToByte(dstG)
+	db := floatToByte(dstB)
+	da := floatToByte(dstA)
+
+	// Apply blend function (premultiplied bytes).
+	br, bg, bb, ba := fn(sr, sg, sb, sa, dr, dg, db, da)
+
+	if coverage == 255 {
+		pixmap.setPremul(x, y,
+			byteToFloat(br), byteToFloat(bg),
+			byteToFloat(bb), byteToFloat(ba))
+		return
+	}
+
+	// lerp(dst, blended, coverage/255)
+	outR := lerpByte(dr, br, coverage)
+	outG := lerpByte(dg, bg, coverage)
+	outB := lerpByte(db, bb, coverage)
+	outA := lerpByte(da, ba, coverage)
+
+	pixmap.setPremul(x, y,
+		byteToFloat(outR), byteToFloat(outG),
+		byteToFloat(outB), byteToFloat(outA))
+}
+
+// floatToByte converts a premultiplied float64 [0,1] to byte [0,255].
+func floatToByte(v float64) byte {
+	f := v*255.0 + 0.5
+	if f < 0 {
+		return 0
+	}
+	if f > 255 {
+		return 255
+	}
+	return byte(f)
+}
+
+// byteToFloat converts a byte [0,255] to float64 [0,1].
+func byteToFloat(b byte) float64 {
+	return float64(b) / 255.0
+}
+
+// lerpByte linearly interpolates between a and b by t/255.
+func lerpByte(a, b, t byte) byte {
+	diff := int16(b) - int16(a)
+	result := int16(a) + int16((int32(diff)*int32(t)+127)/255)
+	if result < 0 {
+		return 0
+	}
+	if result > 255 {
+		return 255
+	}
+	return byte(result)
+}
+
 // blendCoveragePaint blends a single pixel with paint-sampled color and coverage.
 // Uses premultiplied source-over compositing.
 func (r *SoftwareRenderer) blendCoveragePaint(pixmap *Pixmap, x, y int, coverage uint8, paint *Paint) {
@@ -783,11 +919,32 @@ func solidColorFromPaint(paint *Paint) (RGBA, bool) {
 func (r *SoftwareRenderer) blendAlphaRunsFromCoreRuns(pixmap *Pixmap, y int, runs *raster.AlphaRuns, color RGBA,
 	clipFn func(x, y float64) byte, maskFn func(x, y int) uint8,
 	clipMask []uint8, clipMaskW, clipMaskX, clipMaskY int,
+	bfn blendFunc,
 ) {
 	if y < 0 || y >= pixmap.Height() {
 		return
 	}
 
+	// Non-SourceOver: dispatch via blend function.
+	if bfn != nil {
+		for x, alpha := range runs.Iter() {
+			if alpha == 0 || x < 0 || x >= pixmap.Width() {
+				continue
+			}
+			alpha = applyClipCoverageFromMaskOrFn(clipMask, clipMaskW, clipMaskX, clipMaskY, clipFn, x, y, alpha)
+			if alpha == 0 {
+				continue
+			}
+			alpha = applyMaskCoverage(maskFn, x, y, alpha)
+			if alpha == 0 {
+				continue
+			}
+			r.blendCoverageSolidMode(pixmap, x, y, alpha, color, bfn)
+		}
+		return
+	}
+
+	// Fast path: SourceOver — inline float64 formula (zero overhead).
 	for x, alpha := range runs.Iter() {
 		if alpha == 0 {
 			continue
@@ -841,11 +998,33 @@ func (r *SoftwareRenderer) blendAlphaRunsFromCoreRuns(pixmap *Pixmap, y int, run
 func (r *SoftwareRenderer) blendAlphaRunsFromCoreRunsPaint(pixmap *Pixmap, y int, runs *raster.AlphaRuns, paint *Paint,
 	clipFn func(x, y float64) byte, maskFn func(x, y int) uint8,
 	clipMask []uint8, clipMaskW, clipMaskX, clipMaskY int,
+	bfn blendFunc,
 ) {
 	if y < 0 || y >= pixmap.Height() {
 		return
 	}
 
+	// Non-SourceOver: dispatch via blend function.
+	if bfn != nil {
+		for x, alpha := range runs.Iter() {
+			if alpha == 0 || x < 0 || x >= pixmap.Width() {
+				continue
+			}
+			alpha = applyClipCoverageFromMaskOrFn(clipMask, clipMaskW, clipMaskX, clipMaskY, clipFn, x, y, alpha)
+			if alpha == 0 {
+				continue
+			}
+			alpha = applyMaskCoverage(maskFn, x, y, alpha)
+			if alpha == 0 {
+				continue
+			}
+			c := paint.ColorAt(float64(x)+0.5, float64(y)+0.5)
+			r.blendCoverageSolidMode(pixmap, x, y, alpha, c, bfn)
+		}
+		return
+	}
+
+	// Fast path: SourceOver — inline float64 formula (zero overhead).
 	for x, alpha := range runs.Iter() {
 		if alpha == 0 {
 			continue
