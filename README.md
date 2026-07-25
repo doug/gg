@@ -592,6 +592,17 @@ Green flash-and-fade overlay shows damaged (repainted) regions. Useful for verif
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — Contribution guidelines
 - **[pkg.go.dev](https://pkg.go.dev/github.com/gogpu/gg)** — API reference
 
+### Community Tutorials
+
+We haven't written comprehensive tutorials yet, but the community has started:
+
+🇨🇿 **Pavel Tišnovský** ([root.cz](https://www.root.cz)) wrote two in-depth `gg` tutorials with 54 working [examples](https://github.com/tisnik/go-root):
+
+1. [Creating 2D/3D Graphics in Go with GoGPU](https://www.root.cz/clanky/tvorba-2d-i-3d-grafiky-a-animaci-v-go-s-vyuzitim-projektu-gogpu/) — 49 min. Paths, Bézier curves, transforms, text, animations.
+2. [Part 2: Gradients, SVG & PDF Export](https://www.root.cz/clanky/tvorba-2d-i-3d-grafiky-a-animaci-v-go-s-vyuzitim-projektu-gogpu-2-cast/) — 39 min. Linear/radial/angular gradients, vector export.
+
+> Czech language — use [Google Translate](https://translate.google.com/). Code examples are universal.
+
 ### Articles
 
 - [GoGPU: From Idea to 100K Lines in Two Weeks](https://dev.to/kolkov/gogpu-from-idea-to-100k-lines-in-two-weeks-building-gos-gpu-ecosystem-3b2)
