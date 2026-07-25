@@ -347,6 +347,7 @@ func TestTextQuality_GlyphCacheHits(t *testing.T) {
 	if cache == nil {
 		t.Fatal("GetGlobalGlyphCache returned nil")
 	}
+	cache.Clear()
 	cache.ResetStats()
 
 	dc := NewContext(400, 200)
