@@ -189,16 +189,16 @@ func FromStdImage(img image.Image) *ImageBuf {
 	width := bounds.Dx()
 	height := bounds.Dy()
 
-	buf, _ := NewImageBuf(width, height, FormatRGBA8)
-
-	// Fast path for RGBA images
+	// Fast path for *image.RGBA — Go's RGBA is ALPHA-PREMULTIPLIED, so tag it
+	// as premultiplied. Tagging it FormatRGBA8 (straight) made PremultipliedData
+	// premultiply it a second time, corrupting alpha textures (glyph atlases
+	// rendered as solid blocks on the GPU).
 	if rgba, ok := img.(*image.RGBA); ok {
-		// Direct copy if stride matches
+		buf, _ := NewImageBuf(width, height, FormatRGBAPremul)
 		if rgba.Stride == buf.Stride() {
 			copy(buf.Data(), rgba.Pix)
 			return buf
 		}
-		// Row-by-row copy for different strides
 		for y := range height {
 			srcStart := y * rgba.Stride
 			copy(buf.RowBytes(y), rgba.Pix[srcStart:srcStart+width*4])
@@ -206,8 +206,9 @@ func FromStdImage(img image.Image) *ImageBuf {
 		return buf
 	}
 
-	// Fast path for NRGBA images
+	// Fast path for *image.NRGBA — non-premultiplied (straight) alpha.
 	if nrgba, ok := img.(*image.NRGBA); ok {
+		buf, _ := NewImageBuf(width, height, FormatRGBA8)
 		if nrgba.Stride == buf.Stride() {
 			copy(buf.Data(), nrgba.Pix)
 			return buf
@@ -219,13 +220,12 @@ func FromStdImage(img image.Image) *ImageBuf {
 		return buf
 	}
 
-	// Generic slow path for any image type
+	// Generic slow path: color.RGBA() returns alpha-premultiplied values.
+	buf, _ := NewImageBuf(width, height, FormatRGBAPremul)
 	for y := range height {
 		for x := range width {
 			c := img.At(bounds.Min.X+x, bounds.Min.Y+y)
 			r, g, b, a := c.RGBA()
-			// RGBA() returns 16-bit values, scale to 8-bit
-			// Right shift by 8 guarantees result fits in uint8
 			_ = buf.SetRGBA(x, y, byte(r>>8), byte(g>>8), byte(b>>8), byte(a>>8))
 		}
 	}
