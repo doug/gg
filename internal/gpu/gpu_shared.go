@@ -456,7 +456,16 @@ func (s *GPUShared) initGPU() error {
 		PowerPreference: wgpu.PowerPreferenceHighPerformance,
 	})
 	if err != nil {
-		return fmt.Errorf("request adapter: %w", err)
+		// Headless (no surface) can have no hardware adapter — on macOS wgpu
+		// enumerates GPUs only through a surface. Fall back to the software
+		// adapter so offscreen rendering (golden tests, CPU readback) works;
+		// resolveSampleCount below drops MSAA to 1x for it.
+		adapter, err = instance.RequestAdapter(&wgpu.RequestAdapterOptions{
+			ForceFallbackAdapter: true,
+		})
+		if err != nil {
+			return fmt.Errorf("request adapter (hw + software fallback): %w", err)
+		}
 	}
 
 	// Check for software/CPU adapter before creating device.
