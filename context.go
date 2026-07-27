@@ -79,6 +79,7 @@ type Context struct {
 	// with internal/gpu while maintaining type safety.
 	gpuCtx            gpuContextOps
 	gpuFallbackWarned bool // true after first global fallback warning (avoid log spam)
+	gpuDisabled       bool // opt this context out of the (process-global) accelerator entirely
 
 	// Lifecycle
 	closed bool // Indicates whether Close has been called
@@ -298,6 +299,18 @@ func (c *Context) SetPipelineMode(mode PipelineMode) {
 func (c *Context) PipelineMode() PipelineMode {
 	return c.pipelineMode
 }
+
+// SetGPUDisabled opts this context out of the process-global GPU accelerator
+// entirely, so every fill, stroke, and image draw uses the CPU rasterizer.
+// A registered accelerator is otherwise attached lazily to every Context,
+// which is wrong for contexts an application uses as an explicit CPU surface
+// (e.g. a glyph atlas, or a CPU present path alongside a separate GPU canvas):
+// their fills/images would defer to the GPU and read back blank when no device
+// is available. This is a per-context switch; it does not affect other Contexts.
+func (c *Context) SetGPUDisabled(v bool) { c.gpuDisabled = v }
+
+// GPUDisabled reports whether this context is opted out of GPU acceleration.
+func (c *Context) GPUDisabled() bool { return c.gpuDisabled }
 
 // SetRasterizerMode sets the rasterization strategy for this context.
 // RasterizerAuto (default) uses intelligent auto-selection based on path
@@ -1518,6 +1531,9 @@ func (c *Context) GPURenderContext() any {
 
 // ensureGPUCtx lazily creates the per-context GPU render context.
 func (c *Context) ensureGPUCtx() {
+	if c.gpuDisabled {
+		return // CPU-only context: never attach a GPU render context
+	}
 	if c.gpuCtx != nil {
 		return
 	}
@@ -1583,6 +1599,9 @@ func (c *Context) flushGPUAccelerator() {
 // When a mask is active and the accelerator implements MaskAware, the mask
 // is uploaded as a GPU texture. Otherwise, falls back to CPU.
 func (c *Context) tryGPUFill() error {
+	if c.gpuDisabled {
+		return ErrFallbackToCPU
+	}
 	cleanup, err := c.setupGPUMask()
 	if err != nil {
 		return err
@@ -1603,6 +1622,9 @@ func (c *Context) tryGPUFill() error {
 // When a mask is active and the accelerator implements MaskAware, the mask
 // is uploaded as a GPU texture. Otherwise, falls back to CPU.
 func (c *Context) tryGPUStroke() error {
+	if c.gpuDisabled {
+		return ErrFallbackToCPU
+	}
 	cleanup, err := c.setupGPUMask()
 	if err != nil {
 		return err

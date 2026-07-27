@@ -445,7 +445,7 @@ func (s *GPUShared) ensureTextEngine() {
 
 func (s *GPUShared) initGPU() error {
 	instance, err := wgpu.CreateInstance(&wgpu.InstanceDescriptor{
-		Backends: wgpu.BackendsVulkan,
+		Backends: wgpu.BackendsPrimary, // was BackendsVulkan; Primary picks Metal on macOS (headless real-GPU)
 	})
 	if err != nil {
 		return fmt.Errorf("create instance: %w", err)
