@@ -10,7 +10,7 @@ import (
 	"github.com/gogpu/gg"
 	"github.com/gogpu/gg/scene"
 	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // BackendGPU is the identifier for the GPU backend.
@@ -18,17 +18,18 @@ const BackendGPU = "gpu"
 
 // Backend is a GPU-accelerated rendering backend using gogpu/wgpu.
 //
-// The backend manages GPU resources including instance, adapter, device,
-// and queue. It supports both immediate mode rendering (via NewRenderer)
-// and retained mode rendering (via RenderScene).
+// It manages GPU resources (instance, adapter, device, queue) through the
+// portable gogpu/wgpu API, which has both a native and a browser (WebGPU)
+// implementation — so the same GPU renderer runs on every platform, WASM
+// included.
 type Backend struct {
 	mu sync.RWMutex
 
-	// GPU resources
-	instance *core.Instance
-	adapter  core.AdapterID
-	device   core.DeviceID
-	queue    core.QueueID
+	// GPU resources (portable wgpu objects).
+	instance *wgpu.Instance
+	adapter  *wgpu.Adapter
+	device   *wgpu.Device
+	queue    *wgpu.Queue
 
 	// GPU information
 	gpuInfo *GPUInfo
@@ -61,43 +62,36 @@ func (b *Backend) Init() error {
 		return nil
 	}
 
-	// Step 1: Create Instance
-	desc := &gputypes.InstanceDescriptor{
+	// Step 1: Create Instance (native HAL or browser navigator.gpu).
+	inst, err := wgpu.CreateInstance(&wgpu.InstanceDescriptor{
 		Backends: gputypes.BackendsPrimary,
-		Flags:    0,
+	})
+	if err != nil {
+		return fmt.Errorf("%w: %w", ErrNoGPU, err)
 	}
-	b.instance = core.NewInstance(desc)
+	b.instance = inst
 
-	// Step 2: Request Adapter (prefer high performance GPU)
-	adapterID, err := b.instance.RequestAdapter(&gputypes.RequestAdapterOptions{
+	// Step 2: Request Adapter (prefer high performance GPU).
+	adapter, err := inst.RequestAdapter(&wgpu.RequestAdapterOptions{
 		PowerPreference: gputypes.PowerPreferenceHighPerformance,
 	})
 	if err != nil {
 		return fmt.Errorf("%w: %w", ErrNoGPU, err)
 	}
-	b.adapter = adapterID
+	b.adapter = adapter
 
-	// Log GPU information
-	logGPUInfo(adapterID)
+	logGPUInfo(adapter)
+	b.gpuInfo, _ = getGPUInfo(adapter)
 
-	// Get GPU info for later use
-	b.gpuInfo, _ = getGPUInfo(adapterID)
-
-	// Step 3: Create Device
-	deviceID, err := createDevice(adapterID, "gg-wgpu-device")
+	// Step 3: Create Device (nil descriptor → default features/limits).
+	device, err := adapter.RequestDevice(nil)
 	if err != nil {
 		return fmt.Errorf("device creation failed: %w", err)
 	}
-	b.device = deviceID
+	b.device = device
 
-	// Step 4: Get Queue
-	queueID, err := getDeviceQueue(deviceID)
-	if err != nil {
-		// Cleanup on failure
-		_ = releaseDevice(deviceID)
-		return fmt.Errorf("queue retrieval failed: %w", err)
-	}
-	b.queue = queueID
+	// Step 4: Get Queue.
+	b.queue = device.Queue()
 
 	b.initialized = true
 	slogger().Debug("backend initialized")
@@ -115,26 +109,21 @@ func (b *Backend) Close() {
 		return
 	}
 
-	// Release resources in reverse order of creation
-	// Note: Queue is released when device is dropped
-
-	if !b.device.IsZero() {
-		if err := releaseDevice(b.device); err != nil {
-			slogger().Warn("error releasing device", "err", err)
-		}
-		b.device = core.DeviceID{}
+	// Release resources in reverse order of creation. The queue is owned by
+	// the device and released with it.
+	if b.device != nil {
+		b.device.Release()
+		b.device = nil
 	}
-
-	if !b.adapter.IsZero() {
-		if err := releaseAdapter(b.adapter); err != nil {
-			slogger().Warn("error releasing adapter", "err", err)
-		}
-		b.adapter = core.AdapterID{}
+	if b.adapter != nil {
+		b.adapter.Release()
+		b.adapter = nil
 	}
-
-	// Instance doesn't need explicit cleanup in the current implementation
-	b.instance = nil
-	b.queue = core.QueueID{}
+	if b.instance != nil {
+		b.instance.Release()
+		b.instance = nil
+	}
+	b.queue = nil
 	b.gpuInfo = nil
 	b.initialized = false
 
@@ -227,17 +216,15 @@ func (b *Backend) GPUInfo() *GPUInfo {
 	return b.gpuInfo
 }
 
-// Device returns the GPU device ID.
-// Returns a zero ID if the backend is not initialized.
-func (b *Backend) Device() core.DeviceID {
+// Device returns the GPU device, or nil if the backend is not initialized.
+func (b *Backend) Device() *wgpu.Device {
 	b.mu.RLock()
 	defer b.mu.RUnlock()
 	return b.device
 }
 
-// Queue returns the GPU queue ID.
-// Returns a zero ID if the backend is not initialized.
-func (b *Backend) Queue() core.QueueID {
+// Queue returns the GPU queue, or nil if the backend is not initialized.
+func (b *Backend) Queue() *wgpu.Queue {
 	b.mu.RLock()
 	defer b.mu.RUnlock()
 	return b.queue

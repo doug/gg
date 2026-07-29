@@ -25,7 +25,7 @@ func TestPipelineCacheCreation(t *testing.T) {
 	}
 
 	// Test creation
-	pc, err := NewPipelineCache(testDeviceID, shaders)
+	pc, err := NewPipelineCache(nil, shaders)
 	if err != nil {
 		t.Fatalf("NewPipelineCache failed: %v", err)
 	}
@@ -54,7 +54,7 @@ func TestPipelineCacheCreation(t *testing.T) {
 
 // TestPipelineCacheNilShaders tests that nil shaders returns error.
 func TestPipelineCacheNilShaders(t *testing.T) {
-	pc, err := NewPipelineCache(testDeviceID, nil)
+	pc, err := NewPipelineCache(nil, nil)
 	if err == nil {
 		t.Error("Expected error for nil shaders")
 		if pc != nil {
@@ -72,7 +72,7 @@ func TestPipelineCacheBlendPipelines(t *testing.T) {
 		Composite: ShaderModuleID(4),
 	}
 
-	pc, err := NewPipelineCache(testDeviceID, shaders)
+	pc, err := NewPipelineCache(nil, shaders)
 	if err != nil {
 		t.Fatalf("NewPipelineCache failed: %v", err)
 	}
@@ -111,7 +111,7 @@ func TestPipelineCacheWarmup(t *testing.T) {
 		Composite: ShaderModuleID(4),
 	}
 
-	pc, err := NewPipelineCache(testDeviceID, shaders)
+	pc, err := NewPipelineCache(nil, shaders)
 	if err != nil {
 		t.Fatalf("NewPipelineCache failed: %v", err)
 	}
@@ -135,7 +135,7 @@ func TestPipelineCacheClose(t *testing.T) {
 		Composite: ShaderModuleID(4),
 	}
 
-	pc, err := NewPipelineCache(testDeviceID, shaders)
+	pc, err := NewPipelineCache(nil, shaders)
 	if err != nil {
 		t.Fatalf("NewPipelineCache failed: %v", err)
 	}
@@ -497,7 +497,7 @@ func TestQueueSubmitter(t *testing.T) {
 
 // TestBindGroupBuilder tests bind group builder.
 func TestBindGroupBuilder(t *testing.T) {
-	builder := NewBindGroupBuilder(testDeviceID, StubBindGroupLayoutID(1))
+	builder := NewBindGroupBuilder(nil, StubBindGroupLayoutID(1))
 	bg := builder.Build()
 
 	if bg == 0 {

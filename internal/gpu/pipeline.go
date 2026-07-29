@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // PipelineCache caches compiled GPU pipelines for rendering operations.
@@ -19,7 +19,7 @@ type PipelineCache struct {
 	mu sync.RWMutex
 
 	// GPU device for pipeline creation
-	device core.DeviceID
+	device *wgpu.Device
 
 	// Shader modules reference
 	shaders *ShaderModules
@@ -64,7 +64,7 @@ const InvalidPipelineID StubPipelineID = 0
 // It initializes all base pipelines using the provided shader modules.
 //
 // Returns an error if pipeline creation fails.
-func NewPipelineCache(device core.DeviceID, shaders *ShaderModules) (*PipelineCache, error) {
+func NewPipelineCache(device *wgpu.Device, shaders *ShaderModules) (*PipelineCache, error) {
 	if shaders == nil || !shaders.IsValid() {
 		return nil, ErrNotImplemented
 	}
@@ -315,12 +315,12 @@ func (pc *PipelineCache) WarmupBlendPipelines() {
 
 // BindGroupBuilder helps construct bind groups for rendering.
 type BindGroupBuilder struct {
-	device core.DeviceID
+	device *wgpu.Device
 	layout StubBindGroupLayoutID
 }
 
 // NewBindGroupBuilder creates a new bind group builder.
-func NewBindGroupBuilder(device core.DeviceID, layout StubBindGroupLayoutID) *BindGroupBuilder {
+func NewBindGroupBuilder(device *wgpu.Device, layout StubBindGroupLayoutID) *BindGroupBuilder {
 	return &BindGroupBuilder{
 		device: device,
 		layout: layout,

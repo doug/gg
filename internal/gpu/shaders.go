@@ -68,7 +68,7 @@ func (s *ShaderModules) IsValid() bool {
 // Returns:
 //   - *ShaderModules: Compiled shader module handles
 //   - error: Compilation error if shader sources are invalid
-func CompileShaders(deviceID uint64) (*ShaderModules, error) {
+func CompileShaders() (*ShaderModules, error) {
 	// Validate shader sources are non-empty
 	if blitShaderSource == "" {
 		return nil, errors.New("blit shader source is empty")

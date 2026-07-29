@@ -264,8 +264,7 @@ func TestPipelineIntegration(t *testing.T) {
 		Composite: ShaderModuleID(4),
 	}
 
-	var testDeviceID = (*DeviceID)(nil)
-	pc, err := NewPipelineCache(testDeviceID.Zero(), shaders)
+	pc, err := NewPipelineCache(nil, shaders)
 	if err != nil {
 		t.Fatalf("NewPipelineCache failed: %v", err)
 	}

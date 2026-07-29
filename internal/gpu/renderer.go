@@ -118,7 +118,7 @@ func NewGPUSceneRenderer(backend *Backend, config GPUSceneRendererConfig) (*GPUS
 	})
 
 	// Compile shaders and create pipeline cache
-	shaders, err := CompileShaders(uint64(backend.Device().Raw()))
+	shaders, err := CompileShaders()
 	if err != nil {
 		memory.Close()
 		return nil, fmt.Errorf("shader compilation failed: %w", err)

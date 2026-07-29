@@ -42,10 +42,10 @@ func TestBackendInit(t *testing.T) {
 	}
 
 	// Device and Queue should be non-zero
-	if b.Device().IsZero() {
+	if b.Device() == nil {
 		t.Error("Device() should not be zero after Init()")
 	}
-	if b.Queue().IsZero() {
+	if b.Queue() == nil {
 		t.Error("Queue() should not be zero after Init()")
 	}
 
@@ -96,10 +96,10 @@ func TestBackendClose(t *testing.T) {
 	}
 
 	// IDs should be zero
-	if !b.Device().IsZero() {
+	if b.Device() != nil {
 		t.Error("Device() should be zero after Close()")
 	}
-	if !b.Queue().IsZero() {
+	if b.Queue() != nil {
 		t.Error("Queue() should be zero after Close()")
 	}
 	if b.GPUInfo() != nil {

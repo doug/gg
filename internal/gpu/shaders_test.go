@@ -249,7 +249,7 @@ func TestShaderToBlendMode(t *testing.T) {
 
 // TestCompileShaders tests the shader compilation function.
 func TestCompileShaders(t *testing.T) {
-	modules, err := CompileShaders(0)
+	modules, err := CompileShaders()
 	if err != nil {
 		t.Fatalf("CompileShaders() returned error: %v", err)
 	}

@@ -10,7 +10,7 @@ import (
 
 	"github.com/gogpu/gg"
 	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // Texture-related errors.
@@ -92,9 +92,9 @@ func (f TextureFormat) ToWGPUFormat() gputypes.TextureFormat {
 type GPUTexture struct {
 	mu sync.RWMutex
 
-	// GPU resource IDs (stub - will be real wgpu handles when available)
-	textureID core.TextureID
-	viewID    core.TextureViewID
+	// GPU resources (portable wgpu handles; nil for the metadata-only stub).
+	tex  *wgpu.Texture
+	view *wgpu.TextureView
 
 	// Texture properties
 	width  int
@@ -240,20 +240,18 @@ func (t *GPUTexture) IsReleased() bool {
 	return t.released.Load()
 }
 
-// TextureID returns the underlying wgpu texture ID.
-// Returns a zero ID for stub textures.
-func (t *GPUTexture) TextureID() core.TextureID {
+// Texture returns the underlying wgpu texture, or nil for a metadata-only stub.
+func (t *GPUTexture) Texture() *wgpu.Texture {
 	t.mu.RLock()
 	defer t.mu.RUnlock()
-	return t.textureID
+	return t.tex
 }
 
-// ViewID returns the texture view ID.
-// Returns a zero ID for stub textures.
-func (t *GPUTexture) ViewID() core.TextureViewID {
+// View returns the underlying wgpu texture view, or nil for a stub.
+func (t *GPUTexture) View() *wgpu.TextureView {
 	t.mu.RLock()
 	defer t.mu.RUnlock()
-	return t.viewID
+	return t.view
 }
 
 // UploadPixmap uploads pixel data from a Pixmap to the GPU texture.
@@ -369,18 +367,15 @@ func (t *GPUTexture) Close() {
 		manager.unregisterTexture(t)
 	}
 
-	// TODO: Release actual GPU resources when wgpu supports it
-	//
-	// if !t.viewID.IsZero() {
-	//     core.TextureViewDrop(t.viewID)
-	// }
-	// if !t.textureID.IsZero() {
-	//     core.TextureDrop(t.textureID)
-	// }
-
 	t.mu.Lock()
-	t.textureID = core.TextureID{}
-	t.viewID = core.TextureViewID{}
+	if t.view != nil {
+		t.view.Release()
+		t.view = nil
+	}
+	if t.tex != nil {
+		t.tex.Release()
+		t.tex = nil
+	}
 	t.manager = nil
 	t.mu.Unlock()
 }

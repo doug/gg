@@ -23,11 +23,11 @@ func BenchmarkPipelineCreation(b *testing.B) {
 		Composite: ShaderModuleID(4),
 	}
 
-	var deviceID core.DeviceID
+	var _ core.DeviceID
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		pc, err := NewPipelineCache(deviceID, shaders)
+		pc, err := NewPipelineCache(nil, shaders)
 		if err != nil {
 			b.Fatalf("NewPipelineCache failed: %v", err)
 		}
@@ -44,8 +44,8 @@ func BenchmarkBlendPipelineCache(b *testing.B) {
 		Composite: ShaderModuleID(4),
 	}
 
-	var deviceID core.DeviceID
-	pc, err := NewPipelineCache(deviceID, shaders)
+	var _ core.DeviceID
+	pc, err := NewPipelineCache(nil, shaders)
 	if err != nil {
 		b.Fatalf("NewPipelineCache failed: %v", err)
 	}
