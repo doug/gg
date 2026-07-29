@@ -268,6 +268,22 @@ func shouldUseTileRasterizer(p *Path) bool {
 		return false
 	}
 
+	// The tile-based CoverageFiller (SparseStrips) does not track winding
+	// correctly across multiple contours: with more than one subpath — a text
+	// run's glyphs, or a single glyph with counters/holes — the gaps between
+	// contours get filled solid, so text rasterizes as an opaque block. Route
+	// any multi-contour path to the analytic scanline filler, which handles
+	// multi-contour winding correctly. gg already does this for stroke-expanded
+	// paths (doStroke forces RasterizerAnalytic); fills need the same guard.
+	contours := 0
+	for _, v := range p.Verbs() {
+		if v == MoveTo {
+			if contours++; contours > 1 {
+				return false
+			}
+		}
+	}
+
 	x1, y1, x2, y2 := pathBounds(p)
 	bboxW := x2 - x1
 	bboxH := y2 - y1
