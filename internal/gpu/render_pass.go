@@ -9,7 +9,7 @@ import (
 	"sync"
 
 	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // Render pass errors.
@@ -100,7 +100,7 @@ type RenderPassEncoder struct {
 	mu sync.Mutex
 
 	// corePass is the underlying core render pass encoder.
-	corePass *core.CoreRenderPassEncoder
+	corePass *wgpu.RenderPassEncoder
 
 	// encoder is the parent command encoder.
 	encoder *CoreCommandEncoder

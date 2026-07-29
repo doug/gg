@@ -7,12 +7,12 @@ import (
 
 	"github.com/gogpu/gg"
 	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // testDeviceID returns a DeviceID suitable for testing (zero value).
 // In real usage, this would be obtained from backend initialization.
-var testDeviceID core.DeviceID
+var testDeviceID *wgpu.Device
 
 // TestPipelineCacheCreation tests PipelineCache creation.
 func TestPipelineCacheCreation(t *testing.T) {
@@ -477,7 +477,7 @@ func TestLayerStackOperations(t *testing.T) {
 
 // TestQueueSubmitter tests queue submission helper.
 func TestQueueSubmitter(t *testing.T) {
-	var testQueueID core.QueueID
+	var testQueueID *wgpu.Queue
 	submitter := NewQueueSubmitter(testQueueID)
 
 	// Submit should not panic with nil buffers

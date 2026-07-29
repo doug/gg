@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // Compute pass errors.
@@ -91,7 +91,7 @@ type ComputePassEncoder struct {
 	mu sync.Mutex
 
 	// corePass is the underlying core compute pass encoder.
-	corePass *core.CoreComputePassEncoder
+	corePass *wgpu.ComputePassEncoder
 
 	// encoder is the parent command encoder.
 	encoder *CoreCommandEncoder

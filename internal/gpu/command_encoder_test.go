@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu/core"
 )
 
 // =============================================================================
@@ -116,31 +115,31 @@ func TestCoreCommandEncoder_Status(t *testing.T) {
 	tests := []struct {
 		name    string
 		encoder *CoreCommandEncoder
-		want    core.CommandEncoderStatus
+		want    CommandEncoderStatus
 	}{
 		{
 			name:    "nil encoder",
 			encoder: nil,
-			want:    core.CommandEncoderStatusError,
+			want:    CommandEncoderStatusError,
 		},
 		{
 			name:    "recording state",
 			encoder: &CoreCommandEncoder{},
-			want:    core.CommandEncoderStatusRecording,
+			want:    CommandEncoderStatusRecording,
 		},
 		{
 			name: "locked state (render pass)",
 			encoder: &CoreCommandEncoder{
 				activeRenderPass: &RenderPassEncoder{},
 			},
-			want: core.CommandEncoderStatusLocked,
+			want: CommandEncoderStatusLocked,
 		},
 		{
 			name: "locked state (compute pass)",
 			encoder: &CoreCommandEncoder{
 				activeComputePass: &ComputePassEncoder{},
 			},
-			want: core.CommandEncoderStatusLocked,
+			want: CommandEncoderStatusLocked,
 		},
 	}
 
@@ -219,7 +218,7 @@ func TestCoreCommandEncoder_BeginRenderPass(t *testing.T) {
 			}
 
 			// Verify encoder is now locked
-			if tt.encoder.Status() != core.CommandEncoderStatusLocked {
+			if tt.encoder.Status() != CommandEncoderStatusLocked {
 				t.Errorf("encoder status = %v, want Locked", tt.encoder.Status())
 			}
 
@@ -228,7 +227,7 @@ func TestCoreCommandEncoder_BeginRenderPass(t *testing.T) {
 				t.Errorf("End() error: %v", err)
 			}
 
-			if tt.encoder.Status() != core.CommandEncoderStatusRecording {
+			if tt.encoder.Status() != CommandEncoderStatusRecording {
 				t.Errorf("encoder status after End() = %v, want Recording", tt.encoder.Status())
 			}
 		})
@@ -293,7 +292,7 @@ func TestCoreCommandEncoder_BeginComputePass(t *testing.T) {
 			}
 
 			// Verify encoder is now locked
-			if tt.encoder.Status() != core.CommandEncoderStatusLocked {
+			if tt.encoder.Status() != CommandEncoderStatusLocked {
 				t.Errorf("encoder status = %v, want Locked", tt.encoder.Status())
 			}
 
@@ -302,7 +301,7 @@ func TestCoreCommandEncoder_BeginComputePass(t *testing.T) {
 				t.Errorf("End() error: %v", err)
 			}
 
-			if tt.encoder.Status() != core.CommandEncoderStatusRecording {
+			if tt.encoder.Status() != CommandEncoderStatusRecording {
 				t.Errorf("encoder status after End() = %v, want Recording", tt.encoder.Status())
 			}
 		})
@@ -311,14 +310,14 @@ func TestCoreCommandEncoder_BeginComputePass(t *testing.T) {
 
 func TestCoreCommandEncoder_CopyBufferToBuffer(t *testing.T) {
 	// Create mock buffers for testing
-	srcBuffer := &core.Buffer{}
-	dstBuffer := &core.Buffer{}
+	srcBuffer := &Buffer{}
+	dstBuffer := &Buffer{}
 
 	tests := []struct {
 		name          string
 		encoder       *CoreCommandEncoder
-		src           *core.Buffer
-		dst           *core.Buffer
+		src           *Buffer
+		dst           *Buffer
 		srcOffset     uint64
 		dstOffset     uint64
 		size          uint64
@@ -415,7 +414,7 @@ func TestCoreCommandEncoder_CopyBufferToBuffer(t *testing.T) {
 
 func TestCoreCommandEncoder_CopyBufferToTexture(t *testing.T) {
 	texture := &GPUTexture{}
-	buffer := &core.Buffer{}
+	buffer := &Buffer{}
 
 	tests := []struct {
 		name    string
@@ -481,7 +480,7 @@ func TestCoreCommandEncoder_CopyBufferToTexture(t *testing.T) {
 
 func TestCoreCommandEncoder_CopyTextureToBuffer(t *testing.T) {
 	texture := &GPUTexture{}
-	buffer := &core.Buffer{}
+	buffer := &Buffer{}
 
 	tests := []struct {
 		name    string
@@ -584,12 +583,12 @@ func TestCoreCommandEncoder_CopyTextureToTexture(t *testing.T) {
 }
 
 func TestCoreCommandEncoder_ClearBuffer(t *testing.T) {
-	buffer := &core.Buffer{}
+	buffer := &Buffer{}
 
 	tests := []struct {
 		name          string
 		encoder       *CoreCommandEncoder
-		buffer        *core.Buffer
+		buffer        *Buffer
 		offset        uint64
 		size          uint64
 		wantErr       bool
@@ -781,98 +780,6 @@ func TestCoreCommandBuffer_Label(t *testing.T) {
 	}
 }
 
-func TestCoreCommandBuffer_CoreBuffer(t *testing.T) {
-	t.Run("nil command buffer", func(t *testing.T) {
-		var cb *CoreCommandBuffer
-		if cb.CoreBuffer() != nil {
-			t.Error("CoreBuffer() should return nil for nil buffer")
-		}
-	})
-
-	t.Run("buffer without core buffer", func(t *testing.T) {
-		cb := &CoreCommandBuffer{label: "test"}
-		if cb.CoreBuffer() != nil {
-			t.Error("CoreBuffer() should return nil when coreBuffer is nil")
-		}
-	})
-}
-
-// =============================================================================
-// RenderPassDescriptor Tests
-// =============================================================================
-
-func TestRenderPassDescriptor_toCoreDescriptor(t *testing.T) {
-	t.Run("nil descriptor", func(t *testing.T) {
-		var desc *RenderPassDescriptor
-		coreDesc := desc.toCoreDescriptor()
-		if coreDesc != nil {
-			t.Error("expected nil for nil descriptor")
-		}
-	})
-
-	t.Run("descriptor with color attachment", func(t *testing.T) {
-		desc := &RenderPassDescriptor{
-			Label: "test-pass",
-			ColorAttachments: []RenderPassColorAttachment{
-				{
-					LoadOp:     gputypes.LoadOpClear,
-					StoreOp:    gputypes.StoreOpStore,
-					ClearValue: gputypes.Color{R: 1, G: 0, B: 0, A: 1},
-				},
-			},
-		}
-
-		coreDesc := desc.toCoreDescriptor()
-		if coreDesc == nil {
-			t.Fatal("expected non-nil core descriptor")
-		}
-
-		if coreDesc.Label != "test-pass" {
-			t.Errorf("label = %q, want %q", coreDesc.Label, "test-pass")
-		}
-
-		if len(coreDesc.ColorAttachments) != 1 {
-			t.Errorf("color attachments = %d, want 1", len(coreDesc.ColorAttachments))
-		}
-
-		if coreDesc.ColorAttachments[0].LoadOp != gputypes.LoadOpClear {
-			t.Errorf("load op = %v, want Clear", coreDesc.ColorAttachments[0].LoadOp)
-		}
-	})
-
-	t.Run("descriptor with depth stencil", func(t *testing.T) {
-		desc := &RenderPassDescriptor{
-			Label: "test-pass",
-			DepthStencilAttachment: &RenderPassDepthStencilAttachment{
-				DepthLoadOp:       gputypes.LoadOpClear,
-				DepthStoreOp:      gputypes.StoreOpStore,
-				DepthClearValue:   1.0,
-				DepthReadOnly:     false,
-				StencilLoadOp:     gputypes.LoadOpClear,
-				StencilStoreOp:    gputypes.StoreOpDiscard,
-				StencilClearValue: 0,
-				StencilReadOnly:   true,
-			},
-		}
-
-		coreDesc := desc.toCoreDescriptor()
-		if coreDesc == nil {
-			t.Fatal("expected non-nil core descriptor")
-		}
-
-		if coreDesc.DepthStencilAttachment == nil {
-			t.Fatal("expected non-nil depth stencil attachment")
-		}
-
-		ds := coreDesc.DepthStencilAttachment
-		if ds.DepthClearValue != 1.0 {
-			t.Errorf("depth clear value = %f, want 1.0", ds.DepthClearValue)
-		}
-		if !ds.StencilReadOnly {
-			t.Error("stencil read only should be true")
-		}
-	})
-}
 
 // =============================================================================
 // Error Tests
@@ -919,7 +826,7 @@ func TestCoreCommandEncoder_RenderWorkflow(t *testing.T) {
 	}
 
 	// Verify initial state
-	if encoder.Status() != core.CommandEncoderStatusRecording {
+	if encoder.Status() != CommandEncoderStatusRecording {
 		t.Errorf("initial status = %v, want Recording", encoder.Status())
 	}
 
@@ -939,7 +846,7 @@ func TestCoreCommandEncoder_RenderWorkflow(t *testing.T) {
 	}
 
 	// Verify locked state
-	if encoder.Status() != core.CommandEncoderStatusLocked {
+	if encoder.Status() != CommandEncoderStatusLocked {
 		t.Errorf("status after begin pass = %v, want Locked", encoder.Status())
 	}
 
@@ -954,7 +861,7 @@ func TestCoreCommandEncoder_RenderWorkflow(t *testing.T) {
 	}
 
 	// Verify recording state
-	if encoder.Status() != core.CommandEncoderStatusRecording {
+	if encoder.Status() != CommandEncoderStatusRecording {
 		t.Errorf("status after end pass = %v, want Recording", encoder.Status())
 	}
 
@@ -991,7 +898,7 @@ func TestCoreCommandEncoder_ComputeWorkflow(t *testing.T) {
 	}
 
 	// Verify locked state
-	if encoder.Status() != core.CommandEncoderStatusLocked {
+	if encoder.Status() != CommandEncoderStatusLocked {
 		t.Errorf("status after begin pass = %v, want Locked", encoder.Status())
 	}
 

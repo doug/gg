@@ -3,7 +3,7 @@
 package gpu
 
 import (
-	"github.com/gogpu/wgpu/core"
+	"github.com/gogpu/wgpu"
 )
 
 // CommandEncoder wraps GPU command encoding operations.
@@ -13,7 +13,7 @@ import (
 // CommandEncoder accumulates render passes and compute passes,
 // then produces a command buffer when Finish is called.
 type CommandEncoder struct {
-	device  core.DeviceID
+	device  *wgpu.Device
 	encoder StubCommandEncoderID
 
 	// State tracking
@@ -28,7 +28,7 @@ type StubCommandEncoderID uint64
 type StubCommandBufferID uint64
 
 // NewCommandEncoder creates a new command encoder for the given device.
-func NewCommandEncoder(device core.DeviceID) *CommandEncoder {
+func NewCommandEncoder(device *wgpu.Device) *CommandEncoder {
 	// TODO: When wgpu is ready:
 	// encoder, _ := core.CreateCommandEncoder(device, nil)
 
@@ -355,11 +355,11 @@ func (b *CommandBuffer) ID() StubCommandBufferID {
 
 // QueueSubmitter submits command buffers to a GPU queue.
 type QueueSubmitter struct {
-	queue core.QueueID
+	queue *wgpu.Queue
 }
 
 // NewQueueSubmitter creates a new queue submitter.
-func NewQueueSubmitter(queue core.QueueID) *QueueSubmitter {
+func NewQueueSubmitter(queue *wgpu.Queue) *QueueSubmitter {
 	return &QueueSubmitter{queue: queue}
 }
 
@@ -418,7 +418,7 @@ type RenderCommandBuilder struct {
 }
 
 // NewRenderCommandBuilder creates a new render command builder.
-func NewRenderCommandBuilder(device core.DeviceID, target *GPUTexture, clearTarget bool) *RenderCommandBuilder {
+func NewRenderCommandBuilder(device *wgpu.Device, target *GPUTexture, clearTarget bool) *RenderCommandBuilder {
 	encoder := NewCommandEncoder(device)
 	pass := encoder.BeginRenderPass(target, clearTarget)
 
@@ -465,7 +465,7 @@ type ComputeCommandBuilder struct {
 }
 
 // NewComputeCommandBuilder creates a new compute command builder.
-func NewComputeCommandBuilder(device core.DeviceID) *ComputeCommandBuilder {
+func NewComputeCommandBuilder(device *wgpu.Device) *ComputeCommandBuilder {
 	encoder := NewCommandEncoder(device)
 	pass := encoder.BeginComputePass()
 
