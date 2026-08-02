@@ -4,8 +4,8 @@
 package render
 
 import (
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
 )
 
 // DeviceHandle provides GPU device access from the host application.

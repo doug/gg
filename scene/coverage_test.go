@@ -3,7 +3,7 @@ package scene
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // --- Scene Path tests ---

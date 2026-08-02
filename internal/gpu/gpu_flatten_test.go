@@ -6,8 +6,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/naga"
+	"github.com/doug/gg/scene"
+	"github.com/doug/naga"
 )
 
 // TestFlattenShaderCompilation tests that the WGSL shader compiles to SPIR-V.

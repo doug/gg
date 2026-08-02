@@ -9,10 +9,10 @@ import (
 	"os"
 	"sync"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // GlyphMaskEngine manages the CPU-rasterized glyph mask atlas and produces

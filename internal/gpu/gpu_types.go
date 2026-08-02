@@ -3,8 +3,8 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg"
+	"github.com/doug/gpucontext"
 )
 
 // GPUTextureDrawCommand represents a GPU-to-GPU texture compositing command.

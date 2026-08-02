@@ -9,8 +9,8 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg"
+	"github.com/doug/gpucontext"
 )
 
 // --- Vertex data tests ---

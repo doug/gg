@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // TestTextIntegration tests the integration of text drawing with Context.

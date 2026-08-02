@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/gpu"
-	"github.com/gogpu/gg/internal/raster"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/gpu"
+	"github.com/doug/gg/internal/raster"
+	"github.com/doug/gg/scene"
 )
 
 func TestCubicLeafDebug(t *testing.T) {

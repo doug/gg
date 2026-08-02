@@ -6,8 +6,8 @@ package render
 import (
 	"testing"
 
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
 )
 
 func TestNullDeviceHandle(t *testing.T) {

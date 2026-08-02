@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // findTestFont returns a path to a system font suitable for testing.

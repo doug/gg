@@ -3,7 +3,7 @@ package scene
 import (
 	"testing"
 
-	gg "github.com/gogpu/gg"
+	gg "github.com/doug/gg"
 )
 
 // --- Regression: BUG-GG-GPU-SCENE-RENDERER-TEXT-001 ---

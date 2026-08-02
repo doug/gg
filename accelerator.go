@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg/text"
+	"github.com/doug/gpucontext"
 )
 
 // ErrFallbackToCPU indicates the GPU accelerator cannot handle this operation.
@@ -87,7 +87,7 @@ type GPURenderTarget struct {
 // Implementations should be provided by GPU backend packages (e.g., gg/gpu/).
 // Users opt in to GPU acceleration via blank import:
 //
-//	import _ "github.com/gogpu/gg/gpu" // enables GPU acceleration
+//	import _ "github.com/doug/gg/gpu" // enables GPU acceleration
 type GPUAccelerator interface {
 	// Name returns the accelerator name (e.g., "wgpu", "vulkan").
 	Name() string

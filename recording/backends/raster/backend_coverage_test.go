@@ -3,8 +3,8 @@ package raster
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/recording"
+	"github.com/doug/gg"
+	"github.com/doug/gg/recording"
 )
 
 func TestBackendApplyBrushLinearGradient(t *testing.T) {

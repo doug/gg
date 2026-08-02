@@ -10,9 +10,9 @@ import (
 	"log/slog"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
+	"github.com/doug/gg"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
 )
 
 // mockProvider implements gpucontext.DeviceProvider for testing.

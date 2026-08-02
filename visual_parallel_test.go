@@ -4,7 +4,7 @@ import (
 	"image/color"
 	"testing"
 
-	"github.com/gogpu/gg/internal/parallel"
+	"github.com/doug/gg/internal/parallel"
 )
 
 // =============================================================================

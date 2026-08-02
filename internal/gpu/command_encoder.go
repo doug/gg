@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/gputypes"
+	"github.com/doug/gputypes"
 )
 
 // Command encoder errors.

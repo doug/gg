@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/gogpu/gg/internal/wide"
+	"github.com/doug/gg/internal/wide"
 )
 
 // TestBatchPorterDuffModes tests all 14 Porter-Duff modes against scalar reference.

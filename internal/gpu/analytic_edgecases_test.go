@@ -6,10 +6,10 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 	"testing"
 
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/scene"
 )
 
 // =============================================================================

@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // findSystemFont returns a path to a system TTF font suitable for testing.

@@ -2,7 +2,7 @@
 //
 // It parses a subset of SVG XML sufficient for rendering icon-style SVGs
 // (as used by JetBrains IntelliJ, Material Design, etc.) and renders them
-// to RGBA images using [github.com/gogpu/gg.Context].
+// to RGBA images using [github.com/doug/gg.Context].
 //
 // # Supported SVG Elements
 //

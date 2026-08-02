@@ -6,7 +6,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // =============================================================================

@@ -7,11 +7,11 @@ import (
 	"log/slog"
 	"sync"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // gpuRenderStrategy controls which GPU rendering tiers are available based on

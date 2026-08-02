@@ -26,7 +26,7 @@
 // # Example
 //
 //	// Import to register the backend
-//	import _ "github.com/gogpu/gg/recording/backends/raster"
+//	import _ "github.com/doug/gg/recording/backends/raster"
 //
 //	// Create via registry
 //	backend, _ := recording.NewBackend("raster")
@@ -47,9 +47,9 @@ import (
 	"image/png"
 	"io"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/recording"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/recording"
+	"github.com/doug/gg/text"
 )
 
 func init() {

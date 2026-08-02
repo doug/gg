@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // --- ShelfAllocator Tests ---

@@ -3,8 +3,8 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
 )
 
 // SparseStripsFiller implements gg.CoverageFiller using the SparseStrips

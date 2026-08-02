@@ -2,7 +2,7 @@
 package blend
 
 import (
-	"github.com/gogpu/gg/internal/image"
+	"github.com/doug/gg/internal/image"
 )
 
 // Layer represents an isolated drawing surface with blend mode and opacity.

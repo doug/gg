@@ -1,8 +1,8 @@
 package filter
 
 import (
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
 )
 
 // ColorMatrixFilter applies a 4x5 color transformation matrix to an image.

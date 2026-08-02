@@ -6,8 +6,8 @@ import (
 	"image"
 	"math"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // BlendMode represents a compositing blend mode.

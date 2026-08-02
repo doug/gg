@@ -1,7 +1,7 @@
 package clip
 
 import (
-	"github.com/gogpu/gg/internal/image"
+	"github.com/doug/gg/internal/image"
 )
 
 // PathVerb represents a path construction command.

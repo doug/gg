@@ -1,6 +1,6 @@
 package filter
 
-import "github.com/gogpu/gg"
+import "github.com/doug/gg"
 
 // Test helper functions shared across filter tests.
 

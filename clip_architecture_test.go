@@ -3,7 +3,7 @@ package gg
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 )
 
 // Tests for the three-tier clip architecture (ADR-052).

@@ -7,17 +7,17 @@
 // The filler auto-selects SparseStrips (4x4 tiles) for typical paths and
 // TileCompute (16x16 tiles) for extremely complex paths on large canvases.
 //
-// If GPU acceleration is also needed, use import _ "github.com/gogpu/gg/gpu"
+// If GPU acceleration is also needed, use import _ "github.com/doug/gg/gpu"
 // instead, which registers both the GPU accelerator and the coverage filler.
 //
 // Usage:
 //
-//	import _ "github.com/gogpu/gg/raster" // enable CPU tile rasterization
+//	import _ "github.com/doug/gg/raster" // enable CPU tile rasterization
 package raster
 
 import (
-	"github.com/gogpu/gg"
-	gpuimpl "github.com/gogpu/gg/internal/gpu"
+	"github.com/doug/gg"
+	gpuimpl "github.com/doug/gg/internal/gpu"
 )
 
 func init() {

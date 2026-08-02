@@ -9,9 +9,9 @@ import (
 	"math"
 	"unsafe"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // StencilRenderer manages GPU resources for stencil-then-cover path rendering.

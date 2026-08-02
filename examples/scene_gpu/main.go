@@ -19,9 +19,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/gogpu/gg"
-	_ "github.com/gogpu/gg/gpu" // GPU acceleration for scene rendering
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	_ "github.com/doug/gg/gpu" // GPU acceleration for scene rendering
+	"github.com/doug/gg/scene"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package recording
 
 import (
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // Brush represents a fill/stroke style for recording commands.

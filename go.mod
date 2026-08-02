@@ -1,12 +1,12 @@
-module github.com/gogpu/gg
+module github.com/doug/gg
 
 go 1.25.0
 
 require (
-	github.com/gogpu/gpucontext v0.21.1
-	github.com/gogpu/gputypes v0.5.1
-	github.com/gogpu/naga v0.17.15
-	github.com/gogpu/wgpu v0.30.22
+	github.com/doug/gpucontext v0.22.0
+	github.com/doug/gputypes v0.6.0
+	github.com/doug/naga v0.18.0
+	github.com/doug/wgpu v0.31.0
 	golang.org/x/image v0.44.0
 	golang.org/x/text v0.40.0
 )

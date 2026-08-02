@@ -3,7 +3,7 @@ package blend
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/color"
+	"github.com/doug/gg/internal/color"
 )
 
 // TestLinearVsSRGBBlending verifies that linear blending produces different results than sRGB.

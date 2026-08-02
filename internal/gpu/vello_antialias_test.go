@@ -9,7 +9,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // TestSnapPathToPixelGrid verifies that coordinates are rounded to integers.

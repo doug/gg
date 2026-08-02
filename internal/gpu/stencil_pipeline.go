@@ -6,8 +6,8 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // Embedded WGSL shader sources for stencil-then-cover rendering.

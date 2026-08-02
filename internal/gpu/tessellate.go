@@ -5,7 +5,7 @@ package gpu
 import (
 	"math"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // fanFlattenTolerance is the maximum allowed deviation between a curve and its

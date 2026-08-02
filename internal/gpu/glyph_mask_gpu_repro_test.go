@@ -10,9 +10,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
+	"github.com/doug/wgpu"
 )
 
 // TestGlyphMaskGPURepro renders glyph-mask text through the REAL GPU pipeline

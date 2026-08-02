@@ -4,8 +4,8 @@ import (
 	"image"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // mockBackend is a minimal backend implementation for testing.

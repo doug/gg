@@ -6,7 +6,7 @@ import (
 	"sync"
 	"unicode/utf8"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // TextRenderer converts shaped text to scene paths for GPU rendering.

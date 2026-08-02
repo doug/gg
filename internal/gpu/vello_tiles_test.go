@@ -7,14 +7,14 @@ package gpu
 
 import (
 	"fmt"
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 	"image/png"
 	"math"
 	"os"
 	"sort"
 	"testing"
 
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/scene"
 )
 
 func TestNewTileRasterizer(t *testing.T) {

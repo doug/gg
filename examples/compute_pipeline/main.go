@@ -27,8 +27,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/gogpu/gg/internal/gpu"
-	"github.com/gogpu/gg/internal/gpu/tilecompute"
+	"github.com/doug/gg/internal/gpu"
+	"github.com/doug/gg/internal/gpu/tilecompute"
 )
 
 const (

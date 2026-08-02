@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // Atlas-related errors.

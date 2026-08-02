@@ -5,9 +5,9 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
+	"github.com/doug/wgpu"
 )
 
 // testDeviceID returns a DeviceID suitable for testing (zero value).

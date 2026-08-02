@@ -1,6 +1,6 @@
 package blend
 
-import "github.com/gogpu/gg/internal/wide"
+import "github.com/doug/gg/internal/wide"
 
 // Batch implementations of advanced separable blend modes.
 //

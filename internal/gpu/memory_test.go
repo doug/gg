@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // TestTextureFormat tests TextureFormat methods.

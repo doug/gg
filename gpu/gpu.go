@@ -12,17 +12,17 @@
 //
 // For tile-based rasterization only (no GPU shapes), use:
 //
-//	import _ "github.com/gogpu/gg/raster"
+//	import _ "github.com/doug/gg/raster"
 //
 // Usage:
 //
-//	import _ "github.com/gogpu/gg/gpu" // enable GPU acceleration + tile rasterization
+//	import _ "github.com/doug/gg/gpu" // enable GPU acceleration + tile rasterization
 package gpu
 
 import (
-	"github.com/gogpu/gg"
-	gpuimpl "github.com/gogpu/gg/internal/gpu"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg"
+	gpuimpl "github.com/doug/gg/internal/gpu"
+	"github.com/doug/gpucontext"
 )
 
 func init() {

@@ -2,7 +2,7 @@
 
 package gpu
 
-import "github.com/gogpu/gg"
+import "github.com/doug/gg"
 
 const (
 	// extremeSegmentThreshold is the estimated segment count above which

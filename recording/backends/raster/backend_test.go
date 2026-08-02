@@ -5,8 +5,8 @@ import (
 	"image"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/recording"
+	"github.com/doug/gg"
+	"github.com/doug/gg/recording"
 )
 
 func TestBackendRegistration(t *testing.T) {

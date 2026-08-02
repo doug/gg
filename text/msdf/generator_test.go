@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 func TestNewGenerator(t *testing.T) {

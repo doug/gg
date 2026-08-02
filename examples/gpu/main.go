@@ -20,11 +20,11 @@ import (
 	"math"
 	"os"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 
 	// Blank import enables GPU acceleration.
 	// Without this import, all rendering uses CPU (software) rasterization.
-	_ "github.com/gogpu/gg/gpu"
+	_ "github.com/doug/gg/gpu"
 )
 
 func main() {

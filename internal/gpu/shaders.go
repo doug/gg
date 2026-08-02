@@ -8,7 +8,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/scene"
 )
 
 // Embedded WGSL shader sources.

@@ -1,7 +1,7 @@
 package gg
 
 import (
-	intImage "github.com/gogpu/gg/internal/image"
+	intImage "github.com/doug/gg/internal/image"
 )
 
 // Layer represents a drawing layer with blend mode and opacity.

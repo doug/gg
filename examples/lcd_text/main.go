@@ -9,11 +9,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/gogpu/gg"
-	_ "github.com/gogpu/gg/gpu" // GPU accelerator: text goes through Tier 6 glyph mask
-	"github.com/gogpu/gg/integration/ggcanvas"
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/gogpu"
+	"github.com/doug/gg"
+	_ "github.com/doug/gg/gpu" // GPU accelerator: text goes through Tier 6 glyph mask
+	"github.com/doug/gg/integration/ggcanvas"
+	"github.com/doug/gg/text"
+	"github.com/doug/gogpu"
 )
 
 func main() {

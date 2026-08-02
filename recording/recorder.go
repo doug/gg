@@ -5,8 +5,8 @@ import (
 	"math"
 	"strings"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // Recorder captures drawing operations as commands.

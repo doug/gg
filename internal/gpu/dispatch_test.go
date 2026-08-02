@@ -9,10 +9,10 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // --- shapeToPath all shape kinds ---

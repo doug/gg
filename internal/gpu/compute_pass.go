@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/wgpu"
+	"github.com/doug/wgpu"
 )
 
 // Compute pass errors.

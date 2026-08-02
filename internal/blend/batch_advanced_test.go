@@ -3,7 +3,7 @@ package blend
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/wide"
+	"github.com/doug/gg/internal/wide"
 )
 
 // TestBatchAdvancedBasic tests that advanced batch blend modes execute without errors.

@@ -95,7 +95,7 @@
 // # Requirements
 //
 //   - Go 1.25+ (for generic features)
-//   - gogpu/wgpu module (github.com/gogpu/wgpu)
+//   - gogpu/wgpu module (github.com/doug/wgpu)
 //   - A GPU that supports Vulkan, Metal, or DX12 (for actual GPU rendering)
 //
 // # Thread Safety
@@ -123,13 +123,13 @@
 //
 // # Related Packages
 //
-//   - github.com/gogpu/gg: Core 2D graphics library
-//   - github.com/gogpu/gg/scene: Scene graph and retained mode API
-//   - github.com/gogpu/wgpu: Pure Go WebGPU implementation
+//   - github.com/doug/gg: Core 2D graphics library
+//   - github.com/doug/gg/scene: Scene graph and retained mode API
+//   - github.com/doug/wgpu: Pure Go WebGPU implementation
 //
 // # References
 //
 //   - W3C WebGPU Specification: https://www.w3.org/TR/webgpu/
 //   - gogpu Organization: https://github.com/gogpu
-//   - gogpu/wgpu: https://github.com/gogpu/wgpu
+//   - gogpu/wgpu: https://github.com/doug/wgpu
 package gpu

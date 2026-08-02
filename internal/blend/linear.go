@@ -12,7 +12,7 @@
 package blend
 
 import (
-	"github.com/gogpu/gg/internal/color"
+	"github.com/doug/gg/internal/color"
 )
 
 // BlendModeLinear indicates if blending should be performed in linear space.

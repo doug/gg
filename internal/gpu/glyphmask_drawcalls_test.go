@@ -5,9 +5,9 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // TestBuildGlyphMaskDrawCalls_QuadOffsetOnNilBindGroup is a regression test

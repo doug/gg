@@ -15,12 +15,12 @@ import (
 	"math"
 	"sync"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/gpu/tilecompute"
-	"github.com/gogpu/gg/internal/stroke"
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/gpu/tilecompute"
+	"github.com/doug/gg/internal/stroke"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // VelloAccelerator provides GPU-accelerated scene rendering using the Vello-style

@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // findVariableFont returns a path to a system variable font for testing.

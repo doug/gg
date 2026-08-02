@@ -6,8 +6,8 @@ package gpu
 import (
 	"sync"
 
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg/scene"
+	"github.com/doug/wgpu"
 )
 
 // DefaultGPUSegmentThreshold is the minimum number of segments to use GPU.

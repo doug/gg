@@ -7,7 +7,7 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/gogpu/gputypes"
+	"github.com/doug/gputypes"
 )
 
 // RenderTarget defines where rendering output goes.

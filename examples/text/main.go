@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 func main() {

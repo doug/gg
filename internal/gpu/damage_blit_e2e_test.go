@@ -7,9 +7,9 @@ import (
 	"image"
 	"testing"
 
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
-	"github.com/gogpu/wgpu/hal/software"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
+	"github.com/doug/wgpu/hal/software"
 )
 
 // createSoftwareDevice creates a software-backed *wgpu.Device for pixel-exact

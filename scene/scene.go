@@ -1,6 +1,6 @@
 package scene
 
-import "github.com/gogpu/gg/text"
+import "github.com/doug/gg/text"
 
 // Scene is the main retained mode container for accumulating drawing operations.
 // It builds an Encoding that can be efficiently rendered or cached.

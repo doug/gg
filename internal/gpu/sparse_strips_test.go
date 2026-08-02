@@ -6,7 +6,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/scene"
 )
 
 // =============================================================================

@@ -6,7 +6,7 @@ package surface
 import (
 	"math"
 
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 )
 
 // Path represents a vector path for drawing operations.

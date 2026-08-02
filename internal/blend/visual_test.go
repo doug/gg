@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/gogpu/gg/internal/wide"
+	"github.com/doug/gg/internal/wide"
 )
 
 // TestVisualRegression_SourceOver tests batch SourceOver against scalar reference

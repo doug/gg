@@ -4,8 +4,8 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
 )
 
 // gpuTracker is a mock accelerator that counts FillShape/FillPath calls.

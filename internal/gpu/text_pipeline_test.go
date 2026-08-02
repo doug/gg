@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text/msdf"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text/msdf"
 )
 
 // TestMSDFTextShaderSource tests that the shader source is properly embedded.

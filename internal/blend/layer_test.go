@@ -3,7 +3,7 @@ package blend
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/image"
+	"github.com/doug/gg/internal/image"
 )
 
 // TestNewLayer tests layer creation.

@@ -3,7 +3,7 @@ package svg
 import (
 	"image/color"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // renderState holds the rendering state during SVG traversal.

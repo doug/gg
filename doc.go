@@ -12,8 +12,8 @@
 // # Quick Start
 //
 //	import (
-//	    "github.com/gogpu/gg"
-//	    "github.com/gogpu/gg/text"
+//	    "github.com/doug/gg"
+//	    "github.com/doug/gg/text"
 //	)
 //
 //	dc := gg.NewContext(512, 512)

@@ -7,8 +7,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/wgpu"
 )
 
 func TestSDFRenderPipelineCreation(t *testing.T) {

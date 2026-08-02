@@ -4,8 +4,8 @@ import (
 	"math"
 	"unsafe"
 
-	"github.com/gogpu/gg/internal/raster"
-	"github.com/gogpu/gg/internal/stroke"
+	"github.com/doug/gg/internal/raster"
+	"github.com/doug/gg/internal/stroke"
 )
 
 // SoftwareRenderer is a CPU-based scanline rasterizer using analytic anti-aliasing.

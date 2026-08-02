@@ -3,7 +3,7 @@
 package gpu
 
 import (
-	"github.com/gogpu/wgpu"
+	"github.com/doug/wgpu"
 )
 
 // CommandEncoder wraps GPU command encoding operations.

@@ -16,7 +16,7 @@ package gpu
 import (
 	"math"
 
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 )
 
 // TileWidth and TileHeight match Vello's tile dimensions.

@@ -8,9 +8,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/gogpu/gg/internal/gpucore"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg/internal/gpucore"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // HALAdapter implements gpucore.GPUAdapter using gogpu/wgpu/hal directly.

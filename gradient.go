@@ -4,7 +4,7 @@ import (
 	"math"
 	"sort"
 
-	"github.com/gogpu/gg/internal/color"
+	"github.com/doug/gg/internal/color"
 )
 
 // ExtendMode defines how gradients extend beyond their defined bounds.

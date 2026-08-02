@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
 )
 
 // TestBackendName verifies the backend name.

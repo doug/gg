@@ -3,7 +3,7 @@ package blend
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/wide"
+	"github.com/doug/gg/internal/wide"
 )
 
 // BenchmarkSourceOver_Scalar_1000px benchmarks scalar SourceOver blending.

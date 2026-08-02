@@ -13,7 +13,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 var fontPath string

@@ -37,15 +37,15 @@
 //
 // Play back recordings to different output formats:
 //
-//	// PDF output (requires github.com/gogpu/gg-pdf)
-//	import _ "github.com/gogpu/gg-pdf"
+//	// PDF output (requires github.com/doug/gg-pdf)
+//	import _ "github.com/doug/gg-pdf"
 //
 //	pdfBackend, _ := recording.NewBackend("pdf")
 //	r.Playback(pdfBackend)
 //	pdfBackend.(recording.FileBackend).SaveToFile("output.pdf")
 //
-//	// SVG output (requires github.com/gogpu/gg-svg)
-//	import _ "github.com/gogpu/gg-svg"
+//	// SVG output (requires github.com/doug/gg-svg)
+//	import _ "github.com/doug/gg-svg"
 //
 //	svgBackend, _ := recording.NewBackend("svg")
 //	r.Playback(svgBackend)
@@ -62,14 +62,14 @@
 // backend package with a blank identifier to automatically register it:
 //
 //	import (
-//	    "github.com/gogpu/gg/recording"
-//	    _ "github.com/gogpu/gg-pdf"  // Registers "pdf" backend
-//	    _ "github.com/gogpu/gg-svg"  // Registers "svg" backend
+//	    "github.com/doug/gg/recording"
+//	    _ "github.com/doug/gg-pdf"  // Registers "pdf" backend
+//	    _ "github.com/doug/gg-svg"  // Registers "svg" backend
 //	)
 //
 // The built-in "raster" backend is always available via:
 //
-//	import _ "github.com/gogpu/gg/recording/backends/raster"
+//	import _ "github.com/doug/gg/recording/backends/raster"
 //
 // # Resource Management
 //

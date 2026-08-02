@@ -9,11 +9,11 @@ package main
 import (
 	"log"
 
-	"github.com/gogpu/gg"
-	_ "github.com/gogpu/gg/gpu"
-	"github.com/gogpu/gg/integration/ggcanvas"
-	"github.com/gogpu/gogpu"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg"
+	_ "github.com/doug/gg/gpu"
+	"github.com/doug/gg/integration/ggcanvas"
+	"github.com/doug/gogpu"
+	"github.com/doug/gpucontext"
 )
 
 func main() {

@@ -9,8 +9,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/gpu/tilecompute"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/gpu/tilecompute"
 )
 
 // TestVelloAccelerator_FillPathAccumulates verifies that FillPath accumulates

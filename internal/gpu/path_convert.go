@@ -6,9 +6,9 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/gpu/tilecompute"
-	"github.com/gogpu/gg/internal/stroke"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/gpu/tilecompute"
+	"github.com/doug/gg/internal/stroke"
 )
 
 // flushCubics flattens accumulated cubic beziers into line segments and appends them.

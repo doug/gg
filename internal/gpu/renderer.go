@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
 )
 
 // Renderer-specific errors.

@@ -4,7 +4,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 func TestEncodingPool(t *testing.T) {

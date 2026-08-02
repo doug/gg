@@ -59,7 +59,7 @@ func Unregister(name string) {
 //
 // Example:
 //
-//	import _ "github.com/gogpu/gg-pdf" // Register PDF backend
+//	import _ "github.com/doug/gg-pdf" // Register PDF backend
 //
 //	backend, err := recording.NewBackend("pdf")
 //	if err != nil {

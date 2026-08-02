@@ -5,8 +5,8 @@ package gpu
 import (
 	"fmt"
 
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // defaultImageCacheBudget is the maximum number of cached image textures.

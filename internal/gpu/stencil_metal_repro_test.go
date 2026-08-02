@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/wgpu"
 )
 
 // createMetalDevice creates a REAL Metal-backed *wgpu.Device + *wgpu.Queue for

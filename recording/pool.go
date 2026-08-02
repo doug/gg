@@ -3,8 +3,8 @@ package recording
 import (
 	"image"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // Note: PathRef, BrushRef, ImageRef, and InvalidRef are defined in command.go

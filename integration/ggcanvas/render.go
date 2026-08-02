@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gpucontext"
 )
 
 // Rendering errors.

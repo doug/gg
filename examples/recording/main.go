@@ -5,8 +5,8 @@
 //
 // To run with PDF/SVG export, you need the backend packages:
 //
-//	go get github.com/gogpu/gg-pdf
-//	go get github.com/gogpu/gg-svg
+//	go get github.com/doug/gg-pdf
+//	go get github.com/doug/gg-svg
 //
 // Then uncomment the relevant import lines below.
 package main
@@ -15,11 +15,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/recording"
-	_ "github.com/gogpu/gg/recording/backends/raster" // Built-in raster backend
-	// _ "github.com/gogpu/gg-pdf" // Uncomment for PDF export
-	// _ "github.com/gogpu/gg-svg" // Uncomment for SVG export
+	"github.com/doug/gg"
+	"github.com/doug/gg/recording"
+	_ "github.com/doug/gg/recording/backends/raster" // Built-in raster backend
+	// _ "github.com/doug/gg-pdf" // Uncomment for PDF export
+	// _ "github.com/doug/gg-svg" // Uncomment for SVG export
 )
 
 func main() {
@@ -78,14 +78,14 @@ func main() {
 	if recording.IsRegistered("pdf") {
 		exportPDF(r)
 	} else {
-		fmt.Println("PDF backend not available (import github.com/gogpu/gg-pdf)")
+		fmt.Println("PDF backend not available (import github.com/doug/gg-pdf)")
 	}
 
 	// Export to SVG (if backend is imported)
 	if recording.IsRegistered("svg") {
 		exportSVG(r)
 	} else {
-		fmt.Println("SVG backend not available (import github.com/gogpu/gg-svg)")
+		fmt.Println("SVG backend not available (import github.com/doug/gg-svg)")
 	}
 }
 

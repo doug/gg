@@ -1,6 +1,6 @@
 package scene
 
-import "github.com/gogpu/gg"
+import "github.com/doug/gg"
 
 // Filter applies visual effects to rendered layers.
 // Filters are applied during layer pop when LayerFiltered is used.

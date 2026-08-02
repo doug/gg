@@ -3,7 +3,7 @@ package clip
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/image"
+	"github.com/doug/gg/internal/image"
 )
 
 // soaPath is a test helper for building SOA (verb+coords) paths for clip tests.

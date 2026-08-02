@@ -3,8 +3,8 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg/internal/wide"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/internal/wide"
+	"github.com/doug/gg/scene"
 )
 
 // SIMD-optimized operations for sparse strips rasterization.

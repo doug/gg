@@ -8,10 +8,10 @@ import (
 	"image"
 	"os"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gpucontext"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gpucontext"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // glyphMaskDebugCount caps the GOGPU_TEXT_DEBUG dump to the first handful of

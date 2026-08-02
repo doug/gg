@@ -3,7 +3,7 @@ package scene
 import (
 	"testing"
 
-	gg "github.com/gogpu/gg"
+	gg "github.com/doug/gg"
 )
 
 // --- Regression: Encoding.AppendWithImages image index corruption ---

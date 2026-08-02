@@ -3,9 +3,9 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/gpu/tilecompute"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/gpu/tilecompute"
+	"github.com/doug/gg/scene"
 )
 
 // TileComputeFiller implements gg.CoverageFiller using the tilecompute

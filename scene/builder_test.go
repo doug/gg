@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 func TestNewSceneBuilder(t *testing.T) {

@@ -8,8 +8,8 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg"
+	"github.com/doug/gpucontext"
 )
 
 // --- QueueImageDraw ---

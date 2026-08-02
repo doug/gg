@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // forceTextMode lets a developer override text rendering globally via the

@@ -27,12 +27,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/gogpu/gg"
-	_ "github.com/gogpu/gg/gpu" // Register GPU accelerator (SDF + MSAA + MSDF text)
-	"github.com/gogpu/gg/integration/ggcanvas"
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/gogpu"
-	"github.com/gogpu/gpucontext"
+	"github.com/doug/gg"
+	_ "github.com/doug/gg/gpu" // Register GPU accelerator (SDF + MSAA + MSDF text)
+	"github.com/doug/gg/integration/ggcanvas"
+	"github.com/doug/gg/text"
+	"github.com/doug/gogpu"
+	"github.com/doug/gpucontext"
 )
 
 const (

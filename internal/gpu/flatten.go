@@ -5,7 +5,7 @@ package gpu
 import (
 	"math"
 
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/scene"
 )
 
 // FlattenTolerance is the default tolerance for curve flattening.

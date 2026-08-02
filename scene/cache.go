@@ -6,7 +6,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // Default cache configuration constants.

@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/parallel"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/parallel"
+	"github.com/doug/gg/text"
 )
 
 // tilePool manages pooled resources for per-tile rendering.

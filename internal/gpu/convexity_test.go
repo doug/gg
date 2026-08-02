@@ -6,8 +6,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/stroke"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/stroke"
 )
 
 // --- Helper functions for generating test polygons ---

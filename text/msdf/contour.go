@@ -3,7 +3,7 @@ package msdf
 import (
 	"math"
 
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg/text"
 )
 
 // Contour represents a closed contour of edges.

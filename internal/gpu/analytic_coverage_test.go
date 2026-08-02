@@ -5,7 +5,7 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 )
 
 // TestGPUAnalyticFiller_MergedRunAlpha verifies that merged runs in

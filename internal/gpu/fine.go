@@ -3,8 +3,8 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg/internal/raster"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/internal/raster"
+	"github.com/doug/gg/scene"
 )
 
 // FineRasterizer performs fine rasterization with analytic anti-aliasing.

@@ -9,9 +9,9 @@ import (
 	"math"
 	"sync"
 
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg/scene"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 //go:embed shaders/flatten.wgsl

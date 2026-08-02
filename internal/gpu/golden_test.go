@@ -13,9 +13,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/gogpu/gg/internal/gpu/tilecompute"
-	"github.com/gogpu/gg/internal/raster"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/internal/gpu/tilecompute"
+	"github.com/doug/gg/internal/raster"
+	"github.com/doug/gg/scene"
 )
 
 // Vello sparse strips golden tests.

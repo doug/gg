@@ -3,7 +3,7 @@ package scene
 import (
 	"math"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // Shape is the interface for geometric shapes that can be converted to paths.

@@ -5,9 +5,9 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/wgpu/core"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
+	"github.com/doug/wgpu/core"
 )
 
 // =============================================================================

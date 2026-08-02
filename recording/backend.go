@@ -4,8 +4,8 @@ import (
 	"image"
 	"io"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // Backend is the interface that all export backends must implement.

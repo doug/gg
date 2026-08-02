@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"image/color"
 
-	"github.com/gogpu/gg/render"
+	"github.com/doug/gg/render"
 )
 
 // ExampleNewGPURenderer demonstrates creating a GPU renderer with a DeviceHandle.

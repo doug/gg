@@ -3,8 +3,8 @@ package filter
 import (
 	"math"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
 )
 
 // DropShadowFilter creates a drop shadow effect beneath an image.

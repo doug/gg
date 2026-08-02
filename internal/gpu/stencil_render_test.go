@@ -7,7 +7,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 func TestRenderPathTriangle(t *testing.T) {

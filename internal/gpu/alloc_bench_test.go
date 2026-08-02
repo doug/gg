@@ -5,7 +5,7 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 func BenchmarkGPUShared_NewRenderContext(b *testing.B) {

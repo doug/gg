@@ -6,8 +6,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // TestGlyphMaskFullHintingForLatin guards the hinting choice: small axis-aligned

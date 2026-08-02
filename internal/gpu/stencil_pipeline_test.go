@@ -5,7 +5,7 @@ package gpu
 import (
 	"testing"
 
-	"github.com/gogpu/wgpu"
+	"github.com/doug/wgpu"
 )
 
 func TestStencilPipelineCreation(t *testing.T) {

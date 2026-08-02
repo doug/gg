@@ -1,7 +1,7 @@
 package text
 
 import (
-	"github.com/gogpu/gg/text/emoji"
+	"github.com/doug/gg/text/emoji"
 )
 
 // ColorFont is an optional interface that ParsedFont implementations

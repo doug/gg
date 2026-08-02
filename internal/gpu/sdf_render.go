@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 //go:embed shaders/sdf_render.wgsl

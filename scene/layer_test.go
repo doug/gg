@@ -4,8 +4,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/blend"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/blend"
 )
 
 // =============================================================================

@@ -15,8 +15,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // =============================================================================

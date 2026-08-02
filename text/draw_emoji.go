@@ -7,7 +7,7 @@ import (
 
 	xdraw "golang.org/x/image/draw"
 
-	"github.com/gogpu/gg/text/emoji"
+	"github.com/doug/gg/text/emoji"
 )
 
 // DrawWithEmoji renders text with full color emoji support.

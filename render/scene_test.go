@@ -7,7 +7,7 @@ import (
 	"image/color"
 	"testing"
 
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 )
 
 func TestNewScene(t *testing.T) {

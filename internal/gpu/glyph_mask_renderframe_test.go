@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
 )
 
 // TestGlyphMaskRenderFrameNonGrouped renders glyph-mask text through the

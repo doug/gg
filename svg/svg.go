@@ -5,7 +5,7 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // Render parses SVG XML data and renders it to an RGBA image at the specified size.

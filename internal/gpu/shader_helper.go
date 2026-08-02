@@ -5,8 +5,8 @@ package gpu
 import (
 	"fmt"
 
-	"github.com/gogpu/naga"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/naga"
+	"github.com/doug/wgpu"
 )
 
 // CompileShaderToSPIRV compiles WGSL source to SPIR-V uint32 slice.

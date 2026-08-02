@@ -6,7 +6,7 @@ package render
 import (
 	"image/color"
 
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 )
 
 // DirtyRect represents a region that needs redraw.

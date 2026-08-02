@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/gogpu/gg"
+	"github.com/doug/gg"
 )
 
 // Helper to create a pixmap of specific size

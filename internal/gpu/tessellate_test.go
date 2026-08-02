@@ -6,8 +6,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/internal/stroke"
+	"github.com/doug/gg"
+	"github.com/doug/gg/internal/stroke"
 )
 
 // makeTrianglePath returns a simple triangle path (3 LineTo, no curves).

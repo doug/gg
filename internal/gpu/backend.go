@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gg/scene"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // BackendGPU is the identifier for the GPU backend.

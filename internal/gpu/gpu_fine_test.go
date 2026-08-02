@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/gogpu/gg/scene"
-	"github.com/gogpu/naga"
+	"github.com/doug/gg/scene"
+	"github.com/doug/naga"
 )
 
 // TestGPUSegmentConversion tests converting CPU segments to GPU format.

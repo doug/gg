@@ -6,9 +6,9 @@ import (
 	"math"
 	"testing"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gputypes"
-	"github.com/gogpu/wgpu"
+	"github.com/doug/gg"
+	"github.com/doug/gputypes"
+	"github.com/doug/wgpu"
 )
 
 // TestDepthClipPipeline_Lifecycle verifies DepthClipPipeline creation,

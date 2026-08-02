@@ -7,9 +7,9 @@ import (
 	"hash/fnv"
 	"sync"
 
-	"github.com/gogpu/gg"
-	"github.com/gogpu/gg/text"
-	"github.com/gogpu/gg/text/msdf"
+	"github.com/doug/gg"
+	"github.com/doug/gg/text"
+	"github.com/doug/gg/text/msdf"
 )
 
 // GPUTextEngine manages MSDF atlas generation and text layout for GPU

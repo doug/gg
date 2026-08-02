@@ -23,7 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gogpu/gg/text/emoji"
+	"github.com/doug/gg/text/emoji"
 )
 
 func main() {

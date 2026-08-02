@@ -6,7 +6,7 @@
 package gpu
 
 import (
-	"github.com/gogpu/gg/internal/raster"
+	"github.com/doug/gg/internal/raster"
 	"image"
 	"image/color"
 	"image/png"
@@ -14,7 +14,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/gogpu/gg/scene"
+	"github.com/doug/gg/scene"
 )
 
 // TestVelloVisualCircle renders a circle using the Vello tile rasterizer
