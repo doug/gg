@@ -65,8 +65,12 @@ func (c *Context) PushLayer(blendMode BlendMode, opacity float64) {
 		c.basePixmap = c.pixmap
 	}
 
-	// Create new pixmap for the layer (same size as context)
-	layerPixmap := NewPixmap(c.width, c.height)
+	// Create new pixmap for the layer at the current target's PHYSICAL size.
+	// c.width/c.height are logical; the backing pixmap is width*deviceScale.
+	// Sizing the layer to c.width/c.height clipped all drawing past the
+	// top-left logical region on HiDPI (deviceScale > 1) — matching c.pixmap
+	// keeps the layer full-resolution.
+	layerPixmap := NewPixmap(c.pixmap.Width(), c.pixmap.Height())
 	layerPixmap.Clear(Transparent)
 
 	// Create layer
@@ -162,8 +166,9 @@ func (c *Context) PushMaskLayer(mask *Mask) {
 		c.basePixmap = c.pixmap
 	}
 
-	// Create new pixmap for the layer (same size as context).
-	layerPixmap := NewPixmap(c.width, c.height)
+	// Create new pixmap for the layer at the current target's PHYSICAL size
+	// (see PushLayer — logical size clips HiDPI content).
+	layerPixmap := NewPixmap(c.pixmap.Width(), c.pixmap.Height())
 	layerPixmap.Clear(Transparent)
 
 	// Create layer with mask.
